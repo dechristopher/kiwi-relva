@@ -1,0 +1,11 @@
+--- LEGEND ----
++ Addition     |
+~ Modification |
+- Deletion     |
+---------------
+
+== 1.0.0 ==
++ Created basic project structure and files
++ Implemented basic working version of relva
+~ Modified ascii.js for relva
+~ Modified log.js for relva
