@@ -1,0 +1,12 @@
+# NPM Modules
+node_modules/
+
+# Log folder
+logs/
+
+# Config file
+config.json
+
+# SSL Files
+private.key
+ssl.crt
