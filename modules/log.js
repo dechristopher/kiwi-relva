@@ -75,7 +75,7 @@ module.exports = function(message, options = { logName: '', stdOut: true, usePre
     // line = stripColors(line);
 
     // Build strings
-    const strBeginLog = `BEGIN RAAGI LOG FOR ${today}${os.EOL}`;
+    const strBeginLog = `BEGIN RELVA LOG FOR ${today}${os.EOL}`;
     const strCreatedLog = `${prefix} Created new log >> ${file}`;
     const strLogCreationFailed = `${prefix} LOG FILE CREATION FAILED AT ${time} FOR FILE: ${file}`;
     const strFileLoggingFailed = `${prefix} FILE LOGGING FAILED AT ${time} FOR MSG: ${fileLine}`;
