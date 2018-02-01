@@ -4,6 +4,14 @@
 - Deletion     |
 ---------------
 
+== 1.1.0 ==
++ Implemented skeleton functions for future functionality
++ Added shutdown procedures and termination functionality
+~ Only allow bot to communicate within configured channel
+~ No longer yell at players that don't type in commands
+~ Tell players the command they typed incorrectly
++ Added NPM Debug logs to .gitignore
+
 == 1.0.0 ==
 + Created basic project structure and files
 + Implemented basic working version of relva
