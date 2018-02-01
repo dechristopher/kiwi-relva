@@ -10,3 +10,6 @@ config.json
 # SSL Files
 private.key
 ssl.crt
+
+# NPM Debug Logs
+npm-debug.log
