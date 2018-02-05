@@ -1,4 +1,4 @@
-// kiwi/relva/modules/ascii.js - Created January 3rd, 2018
+// kiwi/relva/modules/util/ascii.js - Created January 3rd, 2018
 
 // NPM modules
 const chalk = require('chalk');
