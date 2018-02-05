@@ -10,6 +10,7 @@ const os = require('os');
 // Custom modules
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
+const help = require('./modules/help.js');
 
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
@@ -25,7 +26,7 @@ const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 // Message reply strings
 const strMsgPing = `Pong!`;
 const strMsgNoDM = `I don't reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.`;
-const strMsgHelp = `Available commands: \`!ping\`, \`!help\`, \`!about\`, \`!queue\` - for command details type \`!help <command>\``;
+const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
 const strMsgAbout = `I'm KIWI bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service.`;
 
 // Initialize bot
@@ -73,10 +74,13 @@ bot.on('message', message => {
                 reply(strMsgPing);
                 break;
 
+            case 'h':
             case 'help':
-                reply(strMsgHelp);
+                let resp = (args.length > 0) ? help(args) : strMsgHelp;
+                reply(resp);
                 break;
 
+            case 'a':
             case 'about':
                 reply(strMsgAbout);
                 break;
@@ -89,15 +93,13 @@ bot.on('message', message => {
             case 'p':
             case 'party':
                 // Party operations
+                reply(party(args));
                 break;
 
             default:
                 reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
                 break;
         }
-    } else {
-        // Otherwise it yells at the offending user (but we don't need this if we're not supporting DMs)
-        // reply(`Hey ${message.author.username}, the only language I understand is command-ese. Use !help to learn more.`);
     }
 });
 
@@ -131,6 +133,14 @@ function queue(userID) {
 // active queued players and parties
 function parseQueue() {
 
+}
+
+// Allows the user to operate on their currently
+// joined party or to join or create a different one
+//
+// Returns status message for user information
+function party(args) {
+    return `Parties arent available yet, sorry boio.`;
 }
 
 // Creates a match and provisions a server in
