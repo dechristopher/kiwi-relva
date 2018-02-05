@@ -4,6 +4,14 @@
 - Deletion     |
 ---------------
 
+== 1.1.1 ==
++ Added privilege file (priv.json) for handling user privileges
++ Added checkYourPrivilege() function to check a user's privilege level
++ Added createMatchRoom() function to create match room channels
++ Implemented basic skeleton of queue function
+~ ES6-ified codebases
+~ Moved ascii and log modules to modules/util
+
 == 1.1.0 ==
 + Implemented skeleton functions for future functionality
 + Added shutdown procedures and termination functionality

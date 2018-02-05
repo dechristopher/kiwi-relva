@@ -1,6 +1,6 @@
 {
     "name": "relva",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "The KIWI Bot back in full force made for Discord.",
     "main": "index.js",
     "scripts": {
