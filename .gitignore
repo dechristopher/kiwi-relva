@@ -7,6 +7,9 @@ logs/
 # Config file
 config.json
 
+# User privilege file
+priv.json
+
 # SSL Files
 private.key
 ssl.crt
