@@ -4,6 +4,12 @@
 - Deletion     |
 ---------------
 
+== 1.1.2 ==
++ Implemented help.js for help string definitions
++ Added aliases to commands with vanilla !help command
++ Implemented per-command help guides
++ Added party() function to handle parties in the future
+
 == 1.1.1 ==
 + Added privilege file (priv.json) for handling user privileges
 + Added checkYourPrivilege() function to check a user's privilege level
