@@ -8,11 +8,12 @@ const fs = require('fs');
 const os = require('os');
 
 // Custom modules
-const ascii = require('./modules/ascii.js');
-const log = require('./modules/log.js');
+const ascii = require('./modules/util/ascii.js');
+const log = require('./modules/util/log.js');
 
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
+const priv = JSON.parse(fs.readFileSync('./priv.json'));
 const version = require('./package').version;
 
 // Static strings
@@ -29,11 +30,15 @@ const strMsgAbout = `I'm KIWI bot! Use me like your sick puppet and bend me to y
 
 // Initialize bot
 // Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
-var bot = new Discord.Client();
+let bot = new Discord.Client();
+
+// The discord server the bot is a part of
+let guild;
 
 // Called when bot is connected
 bot.on('ready', function() {
     log(`Logged in as: ${bot.user.username} => (${bot.user.id})`);
+    guild = bot.guilds.first();
 });
 
 // Called when bot receives messages
@@ -50,16 +55,18 @@ bot.on('message', message => {
     };
 
     // Only reply to messages in #kiwipugs
-    if (message.channel.id != conf.channel) {
+    if (message.channel.id != conf.server.channel) {
         reply(strMsgNoDM);
         return;
     }
 
     // Listen for messages that start with `!`
     if (message.content.substring(0, 1) == '!') {
-        var args = message.content.substring(1).split(' ');
-        var cmd = args[0];
+        let args = message.content.substring(1).split(' ');
+        let cmd = args[0];
         args = args.splice(1);
+
+        let priv = checkYourPrivilege(message.author.id);
 
         switch (cmd) {
             case 'ping':
@@ -76,7 +83,7 @@ bot.on('message', message => {
 
             case 'q':
             case 'queue':
-                queue(message.author.id);
+                reply(queue(message.author.id));
                 break;
 
             case 'p':
@@ -94,11 +101,30 @@ bot.on('message', message => {
     }
 });
 
+// Checks for and returns a user's privilege level
+// 2 - admin
+// 1 - mod
+// 0 - normal
+function checkYourPrivilege(userID) {
+    for (let i = 0; i < priv.users.length; i++) {
+        if (priv.users[i].userID == userID) {
+            return users[i].level;
+        }
+    }
+    return 0;
+}
+
 // Toggle player or party queue status
 // Additionally runs checks to see if enqueued
 // entities satisfy match being ptovisioned
+//
+// Returns status message for user information
 function queue(userID) {
-
+    //TODO: Add to queue
+    //Check queue
+    parseQueue();
+    // Return response
+    return `User ${userID} cannot be queued up since the PUG queue isn't online yet!`;
 }
 
 // Determines viability of fair game with
@@ -113,8 +139,19 @@ function provisionMatch(params = { players: ['drop', 'sparks'], region: 'us-ma' 
 
 }
 
+// Creates match room with specified matchID and
+// returns channel object to the calling function
+function createMatchRoom(matchID) {
+    guild.createChannel(`matchroom-pug-${matchID}`, 'text').then((channel) => {
+        channel.setParent(conf.matchRoomCategory);
+        log(`Created matchroom ${channel.name};`);
+        return channel;
+    });
+}
+
 // Sends DMs to players selected for a new match
-function notifyClients(players = ['drop', 'sparks']) {
+// Also adds them to the created match room
+function provisionClients(players = ['drop', 'sparks']) {
 
 }
 
