@@ -11,6 +11,7 @@ const os = require('os');
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const help = require('./modules/help.js');
+let user;
 
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
@@ -26,6 +27,7 @@ const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 // Message reply strings
 const strMsgPing = `Pong!`;
 const strMsgNoDM = `I don't reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.`;
+const strMsgNotLinked = `Please link your SteamID with \`!link <Steam Profile URL>\` before continuing to use the service.`;
 const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
 const strMsgAbout = `I'm KIWI bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service.`;
 
@@ -39,6 +41,9 @@ let guild;
 // Called when bot is connected
 bot.on('ready', function() {
     log(`Logged in as: ${bot.user.username} => (${bot.user.id})`);
+    // Instantiate the user module
+    user = new(require('./modules/user.js'))(bot, conf.db);
+    // Set the guild reference
     guild = bot.guilds.first();
 });
 
@@ -61,6 +66,10 @@ bot.on('message', message => {
         return;
     }
 
+    // Perform avatar association transaction
+    // log(message.author.avatarURL);
+    // user.avatarAssoc(message.author.id, message.author.avatarURL);
+
     // Listen for messages that start with `!`
     if (message.content.substring(0, 1) == '!') {
         let args = message.content.substring(1).split(' ');
@@ -69,36 +78,49 @@ bot.on('message', message => {
 
         let priv = checkYourPrivilege(message.author.id);
 
-        switch (cmd) {
-            case 'ping':
-                reply(strMsgPing);
-                break;
+        // Ensure user has a linked steam account
+        if (user.isLinked()) {
+            switch (cmd) {
+                case 'ping':
+                    reply(strMsgPing);
+                    break;
 
-            case 'h':
-            case 'help':
-                let resp = (args.length > 0) ? help(args) : strMsgHelp;
-                reply(resp);
-                break;
+                case 'h':
+                case 'help':
+                    reply((args.length > 0) ? help(args) : strMsgHelp);
+                    break;
 
-            case 'a':
-            case 'about':
-                reply(strMsgAbout);
-                break;
+                case 'a':
+                case 'about':
+                    reply(strMsgAbout);
+                    break;
 
-            case 'q':
-            case 'queue':
-                reply(queue(message.author.id));
-                break;
+                case 'link':
+                    reply(user.linkAccount(message.author.id, args[0]));
+                    break;
 
-            case 'p':
-            case 'party':
-                // Party operations
-                reply(party(args));
-                break;
+                case 'q':
+                case 'queue':
+                    reply(queue(message.author.id));
+                    break;
 
-            default:
-                reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
-                break;
+                case 'p':
+                case 'party':
+                    // Party operations
+                    reply(party(args));
+                    break;
+
+                default:
+                    reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
+                    break;
+            }
+        } else {
+            if (cmd === 'link') {
+                reply(user.linkAccount(message.author.id, args[0]));
+            } else {
+                reply(strMsgNotLinked);
+                return;
+            }
         }
     }
 });
