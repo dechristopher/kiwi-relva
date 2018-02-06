@@ -4,6 +4,13 @@
 - Deletion     |
 ---------------
 
+== 1.2.0 ==
++ Implemented base DB connection class in modules/service/dbc.js
++ Implemented base User class in modules/user.js
+~ Enforce user registration (steamID linking)
++ Added TODO list in README
++ Added NPM dependency 'mysql'
+
 == 1.1.2 ==
 + Implemented help.js for help string definitions
 + Added aliases to commands with vanilla !help command
