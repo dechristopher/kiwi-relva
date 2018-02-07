@@ -1,0 +1,38 @@
+RELVA Avatar Association Algorithm & Flow
+
+1. Linked user sends a command to the kiwipugs channel
+2. user.avatarAssoc() is asynchronously run to set the user's avatar as their Discord avatar
+3. avatarAssoc() checks Redis cache to see if avatar URL has changed since last transaction
+
+if (does not exist in cache) {
+
+    4. Add url to redis cache
+
+    5. Set URL in database
+
+} else(key exists but URL is different than stored URL) {
+
+    4. Update URL in redis cache
+
+    5. Update URL in database
+
+} else (exists in cache) {
+
+    4. Go no further
+
+}
+
+
+Redis ref.
+-----------------------------------------------------------------------------
+Avatar URL Cache uses Redis HashMaps to store data
+
+key: avatars
+
+field: `(userid)`
+value: `https://cdn.discordapp.com/avatars/...`
+
+
+HEXISTS `avatars` `(userid)` -> true/false
+HGET `avatars` `(userid)` -> `https://cdn.discordapp.com/avatars/...`
+HSET `avatars` `(userid)` `https://cdn.discordapp.com/avatars/`
