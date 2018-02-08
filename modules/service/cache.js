@@ -1,7 +1,7 @@
 // kiwi/relva/modules/db.js - Created February 6th, 2018
 
 // NPM Modules
-const redis = require('redis');
+const redis = require('redis'); //https://github.com/NodeRedis/node_redis
 
 // Custom Modules
 const log = require('../util/log.js');

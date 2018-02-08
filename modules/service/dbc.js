@@ -1,7 +1,7 @@
 // kiwi/relva/modules/db.js - Created February 6th, 2018
 
 // NPM Modules
-const mysql = require('mysql');
+const mysql = require('mysql'); //https://github.com/mysqljs/mysql
 
 // Custom Modules
 const log = require('../util/log.js');
