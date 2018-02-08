@@ -38,7 +38,8 @@ let bot = new Discord.Client();
 // The discord server the bot is a part of
 let guild;
 
-let debug = process.argv.indexOf("debug") > -1;
+// Debug mode enabled
+let debug = (process.argv.indexOf("debug") > -1);
 
 // Called when bot is connected
 bot.on('ready', function() {
