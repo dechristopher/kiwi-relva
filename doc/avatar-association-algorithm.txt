@@ -16,7 +16,7 @@ if (does not exist in cache) {
 
     5. Update URL in database
 
-} else (exists in cache) {
+} else (key exists in cache and URL is same as stored URL) {
 
     4. Go no further
 
