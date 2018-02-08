@@ -4,6 +4,19 @@
 - Deletion     |
 ---------------
 
+=== R E L V A   C H A N G E L O G ===
+
+== 1.3.0 ==
++ Implemented base Redis connection class in modules/service/cache.js
+~ Improved flow of command parsing and link checking
++ Implemented avatar association algorithm user.avatarAssoc()
++ Implemented user.checkLinked() to see if users have a steamID linked
++ Implemented data acquisition method skeletons throughout user.js
++ Added debug mode "npm start debug" (just needs "debug" in argv to work)
+~ Prefix db connection logging with '[db]'
+~ Changed provisionClients() method to include channel parameter
+~
+
 == 1.2.0 ==
 + Implemented base DB connection class in modules/service/dbc.js
 + Implemented base User class in modules/user.js
