@@ -20,11 +20,11 @@ class DatabaseConnection {
 
         this.connection.connect(function(err) {
             if (err) {
-                log(`[db] KIWI-DB Connection Error -> \n${err.stack}`);
+                log(`[db] Connection Error -> \n${err.stack}`);
                 process.exit(1);
             }
 
-            log(`[db] KIWI-DB connection established`);
+            log(`[db] Connection established`);
         });
     }
 

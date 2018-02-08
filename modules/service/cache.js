@@ -23,12 +23,12 @@ class RedisConnection {
         });
 
         this.connection.on("connect", function() {
-            log(`[cache] KIWI-Cache connection established`);
+            log(`[cache] Connection established`);
         });
 
         this.connection.on("ready", function() {
             //this.connection.auth(options.password);
-            log(`[cache] KIWI-Cache ready`);
+            log(`[cache] Ready`);
         });
     }
 
