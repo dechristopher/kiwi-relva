@@ -38,11 +38,13 @@ let bot = new Discord.Client();
 // The discord server the bot is a part of
 let guild;
 
+let debug = process.argv.indexOf("debug") > -1;
+
 // Called when bot is connected
 bot.on('ready', function() {
     log(`Logged in as: ${bot.user.username} => (${bot.user.id})`);
     // Instantiate the user module
-    user = new(require('./modules/user.js'))(bot, conf.db);
+    user = new(require('./modules/user.js'))(bot, conf.db, conf.cache, debug);
     // Set the guild reference
     guild = bot.guilds.first();
 });
@@ -66,10 +68,6 @@ bot.on('message', message => {
         return;
     }
 
-    // Perform avatar association transaction
-    // log(message.author.avatarURL);
-    // user.avatarAssoc(message.author.id, message.author.avatarURL);
-
     // Listen for messages that start with `!`
     if (message.content.substring(0, 1) == '!') {
         let args = message.content.substring(1).split(' ');
@@ -78,50 +76,62 @@ bot.on('message', message => {
 
         let priv = checkYourPrivilege(message.author.id);
 
-        // Ensure user has a linked steam account
-        if (user.isLinked()) {
-            switch (cmd) {
-                case 'ping':
-                    reply(strMsgPing);
-                    break;
+        user.checkLinked(message.author.id).then((isLinked) => {
+            if (isLinked) {
+                // Perform avatar association transaction
+                user.avatarAssoc(message.author.id, message.author.avatarURL);
 
-                case 'h':
-                case 'help':
-                    reply((args.length > 0) ? help(args) : strMsgHelp);
-                    break;
+                //Run commands
+                switch (cmd) {
+                    case 'ping':
+                        reply(strMsgPing);
+                        break;
 
-                case 'a':
-                case 'about':
-                    reply(strMsgAbout);
-                    break;
+                    case 'h':
+                    case 'help':
+                        reply((args.length > 0) ? help(args) : strMsgHelp);
+                        break;
 
-                case 'link':
-                    reply(user.linkAccount(message.author.id, args[0]));
-                    break;
+                    case 'a':
+                    case 'about':
+                        reply(strMsgAbout);
+                        break;
 
-                case 'q':
-                case 'queue':
-                    reply(queue(message.author.id));
-                    break;
+                    case 'link':
+                        reply(user.linkAccount(message.author.id, args[0]));
+                        break;
 
-                case 'p':
-                case 'party':
-                    // Party operations
-                    reply(party(args));
-                    break;
+                    case 'q':
+                    case 'queue':
+                        reply(queue(message.author.id));
+                        break;
 
-                default:
-                    reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
-                    break;
-            }
-        } else {
-            if (cmd === 'link') {
-                reply(user.linkAccount(message.author.id, args[0]));
+                    case 'p':
+                    case 'party':
+                        // Party operations
+                        reply(party(args));
+                        break;
+
+                    default:
+                        reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
+                        break;
+                }
             } else {
-                reply(strMsgNotLinked);
-                return;
+                // Check for link attempt
+                if (cmd === 'link') {
+                    reply(user.linkAccount(message.author.id, args[0]));
+                } else {
+                    reply(strMsgNotLinked);
+                    return;
+                }
             }
-        }
+        }).catch((err) => {
+            log(err);
+            reply(`Error! We're looking into it...`);
+        });
+
+        // Ensure user has a linked steam account
+
     }
 });
 
@@ -183,7 +193,7 @@ function createMatchRoom(matchID) {
 
 // Sends DMs to players selected for a new match
 // Also adds them to the created match room
-function provisionClients(players = ['drop', 'sparks']) {
+function provisionClients(channel, players = ['drop', 'sparks']) {
 
 }
 
