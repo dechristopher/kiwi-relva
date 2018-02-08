@@ -15,7 +15,7 @@
 + Added debug mode "npm start debug" (just needs "debug" in argv to work)
 ~ Prefix db connection logging with '[db]'
 ~ Changed provisionClients() method to include channel parameter
-~
+~ Added the header to this changelog :>
 
 == 1.2.0 ==
 + Implemented base DB connection class in modules/service/dbc.js
