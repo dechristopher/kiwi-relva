@@ -16,3 +16,6 @@ ssl.crt
 
 # NPM Debug Logs
 npm-debug.log
+
+# Stupid vscode generated files
+.vscode/
