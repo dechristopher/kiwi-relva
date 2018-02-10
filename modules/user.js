@@ -3,6 +3,10 @@
 // Custom Modules
 const log = require('./util/log.js');
 
+// Operation Modules
+const opAvatarAssoc = require('./ops/avatarAssoc.js');
+const opCheckLinked = require('./ops/checkLinked.js');
+
 class User {
     constructor(bot, dbOptions, cacheOptions, debug = false) {
         this.bot = bot;
@@ -12,57 +16,15 @@ class User {
     }
 
     checkLinked(userID) {
-        let conn = this.dbc.conn();
-        return new Promise(function(resolve, reject) {
-            conn.query('SELECT steam_id FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-                if (error) {
-                    reject(error);
-                }
-                //console.log(`${userID} ${results} ${results[0].steam_id !== undefined}`);
-                if (results.length === 1) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            });
-        });
+        return opCheckLinked(userID, this.dbc.conn(), this.debug);
     }
 
     linkAccount(userID, steamID) {
         return `[FAKE] Linked SteamID: ${steamID} to user ID: ${userID}`;
     }
 
-    // Non-promisified, happens regardles of command running chain
     avatarAssoc(userID, avatarURL) {
-        let dbconn = this.dbc.conn();
-        let cconn = this.cache.conn();
-        let debug = this.debug;
-        cconn.hexists('avatars', userID, function(err, reply) {
-            if (debug) { log(`Avatar Exists (${userID}): ${reply}`); }
-            if (reply === 1) {
-                cconn.hget('avatars', userID, function(err, reply) {
-                    if (reply === avatarURL) {
-                        // Do nothing :D
-                        if (debug) { log(`Avatar for ${userID} already set properly. Not hitting db.`); }
-                        return;
-                    } else {
-                        dbconn.query('UPDATE `users` SET discord_avatar_url = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
-                            if (debug) { log(`Set ${userID} avatar to ${avatarURL} in db`); }
-                        });
-                        cconn.hset('avatars', userID, avatarURL, function(err, reply) {
-                            if (debug) { log(`Set ${userID} avatar to ${avatarURL} in cache`); }
-                        });
-                    }
-                });
-            } else {
-                dbconn.query('UPDATE `users` SET discord_avatar_url = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
-                    if (debug) { log(`Set ${userID} avatar to ${avatarURL} in db`); }
-                });
-                cconn.hset('avatars', userID, avatarURL, function(err, reply) {
-                    if (debug) { log(`Set ${userID} avatar to ${avatarURL} in cache`); }
-                });
-            }
-        });
+        opAvatarAssoc(userID, avatarURL, this.dbc.conn(), this.cache.conn(), this.debug);
     }
 
     getUserSteamID(userID) {
