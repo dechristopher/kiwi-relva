@@ -29,7 +29,7 @@ const strMsgPing = `Pong!`;
 const strMsgNoDM = `I don't reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.`;
 const strMsgNotLinked = `Please link your SteamID with \`!link <Steam Profile URL>\` before continuing to use the service.`;
 const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
-const strMsgAbout = `I'm KIWI bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service.`;
+const strMsgAbout = `I'm KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use \`!help\` to learn what I can do.`;
 
 // Initialize bot
 // Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
@@ -44,7 +44,7 @@ let debug = (process.argv.indexOf("debug") > -1);
 // Called when bot is connected
 bot.on('ready', function() {
     log(`Logged in as: ${bot.user.username} => (${bot.user.id})`);
-    // Instantiate the user module
+    // Instantiate the user module and service factories
     user = new(require('./modules/user.js'))(bot, conf.db, conf.cache, debug);
     // Set the guild reference
     guild = bot.guilds.first();
