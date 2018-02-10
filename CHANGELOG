@@ -6,6 +6,14 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.3.1 ==
++ Added project structure to README.md
+~ Changed !about command response slightly
+~ Improved documentation slightly in index.js
++ Created module for avatarAssoc function
++ Created module for checkLinked function
++ Updated references in user.js to use operation modules
+
 == 1.3.0 ==
 + Implemented base Redis connection class in modules/service/cache.js
 ~ Improved flow of command parsing and link checking
