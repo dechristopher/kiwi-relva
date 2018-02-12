@@ -6,6 +6,24 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.4.0 ==
+~ Modified `not linked` message
++ Added verify channel to listen channels
++ Added !pi hidden command
+~ Slightly modified wording in some error messages
++ Added space before colon in !help <command> messages
++ Implemented steamID grabber operation module grabSteamID.js
+~ Fixed documentation in checkLinked.js and altered query
++ Created account linking operation module linkAccount.js
++ Created unimplemented data operation modules
++ Implemented linkAccount() in user.js
++ Implemented getUserName() in user.js
+~ Began rewriting data operation module calls in user.js
++ Added NPM dependency 'regex'
++ Added NPM dependency 'xml2js'
++ Added NPM dependency 'steamidconvert'
++ Added NPM dependenct 'got'
+
 == 1.3.1 ==
 + Added project structure to README.md
 ~ Changed !about command response slightly
