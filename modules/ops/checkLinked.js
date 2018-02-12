@@ -4,15 +4,15 @@
 const log = require('../util/log.js');
 
 /*
-    Avatar Association Algorithm: doc/avatar-association-algorithm.txt
-    - Non-promisified, happens regardles of command runner event loop
+    Account link checker
     - userID (string): the user's Discord ID
     - dbconn (Object): reference to the database connection
     - debug (boolean): whether or not to show debug output
 */
 module.exports = function(userID, dbconn, debug) {
     return new Promise(function(resolve, reject) {
-        dbconn.query('SELECT steam_id FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
+        // Ensure user has a profile linked and has set their username
+        dbconn.query("SELECT steam_id FROM `users` WHERE `discord_id` = ? AND `username` > ''", [userID], function(error, results, fields) {
             //if (debug) { log(`${userID} ${results} ${results[0].steam_id !== undefined}`); }
             if (error) {
                 reject(error);
