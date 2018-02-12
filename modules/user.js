@@ -6,6 +6,10 @@ const log = require('./util/log.js');
 // Operation Modules
 const opAvatarAssoc = require('./ops/avatarAssoc.js');
 const opCheckLinked = require('./ops/checkLinked.js');
+const opLinkAccount = require('./ops/linkAccount.js');
+
+// Data Operation Modules
+const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
 
 class User {
     constructor(bot, dbOptions, cacheOptions, debug = false) {
@@ -19,8 +23,12 @@ class User {
         return opCheckLinked(userID, this.dbc.conn(), this.debug);
     }
 
-    linkAccount(userID, steamID) {
-        return `[FAKE] Linked SteamID: ${steamID} to user ID: ${userID}`;
+    linkAccount(username, userID, steamURL) {
+        opLinkAccount(username, userID, steamURL, this.dbc.conn(), this.debug).then(resp => {
+            return resp;
+        }).catch(err => {
+            return `An unforseen error has occurred, please contact \`drop\` immediately and try again later. [CODE: K75]`;
+        });
     }
 
     avatarAssoc(userID, avatarURL) {
@@ -42,6 +50,12 @@ class User {
     getUserSteamID3(userID) {
         this.dbc.conn().query('SELECT steam_id_3 FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
             return results[0].steam_id_3;
+        });
+    }
+
+    getUserName(userID) {
+        opGetUserSteamID(userID, this.dbc.conn(), this.debug).then(sid => {
+            return sid;
         });
     }
 
