@@ -1,11 +1,11 @@
 // kiwi/relva/modules/help.js - Created February 5th, 2018
 
 // Command help descriptions
-const strHelpPing = `\`!ping\`: basic response command to test bot functionality and response time.`;
-const strHelpHelp = `\`!help\`: gives more information about certain commands and their usage.`;
-const strHelpAbout = `\`!about\`: gives some basic information about the KIWI PUG system and KIWIBot.`;
-const strHelpQueue = `\`!queue\`: allows a user or party to join the PUG or scrim matchmaking queue`;
-const strHelpParty = `\`!party\`: allows users to create parties to queue into matches together.`;
+const strHelpPing = `\`!ping\` : basic response command to test bot functionality and response time.`;
+const strHelpHelp = `\`!help\` : gives more information about certain commands and their usage.`;
+const strHelpAbout = `\`!about\` : gives some basic information about the KIWI PUG system and KIWIBot.`;
+const strHelpQueue = `\`!queue\` : allows a user or party to join the PUG or scrim matchmaking queue`;
+const strHelpParty = `\`!party\` : allows users to create parties to queue into matches together.`;
 
 module.exports = function(args) {
     // Returns help strings for questioned commands
