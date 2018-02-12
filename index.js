@@ -11,6 +11,7 @@ const os = require('os');
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const help = require('./modules/help.js');
+const grabSteamID = require('./modules/ops/grabSteamID.js');
 let user;
 
 // Build configuration
@@ -27,7 +28,7 @@ const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 // Message reply strings
 const strMsgPing = `Pong!`;
 const strMsgNoDM = `I don't reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.`;
-const strMsgNotLinked = `Please link your SteamID with \`!link <Steam Profile URL>\` before continuing to use the service.`;
+const strMsgNotLinked = `Please link your SteamID with \`!link <Steam Profile URL>\` and set your name with \`!name <username>\` before continuing to use the service.`;
 const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
 const strMsgAbout = `I'm KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use \`!help\` to learn what I can do.`;
 
@@ -48,6 +49,14 @@ bot.on('ready', function() {
     user = new(require('./modules/user.js'))(bot, conf.db, conf.cache, debug);
     // Set the guild reference
     guild = bot.guilds.first();
+
+    // Erroneous test functionality
+    if (debug) {
+        grabSteamID('https://steamcommunity.com/id/dropisbae').then((nugget) => {
+            console.log(nugget.error);
+            console.dir(nugget.ids);
+        });
+    }
 });
 
 // Called when bot receives messages
@@ -63,8 +72,8 @@ bot.on('message', message => {
         message.channel.send(content);
     };
 
-    // Only reply to messages in #kiwipugs
-    if (message.channel.id != conf.server.channel) {
+    // Only reply to messages in #kiwipugs and #kiwiverify
+    if (message.channel.id != conf.server.pugChannel && message.channel.id != conf.server.verifyChannel) {
         reply(strMsgNoDM);
         return;
     }
@@ -75,6 +84,7 @@ bot.on('message', message => {
         let cmd = args[0];
         args = args.splice(1);
 
+        // Get user privilege level
         let priv = checkYourPrivilege(message.author.id);
 
         user.checkLinked(message.author.id).then((isLinked) => {
@@ -113,6 +123,10 @@ bot.on('message', message => {
                         reply(party(args));
                         break;
 
+                    case 'pi':
+                        reply(`3.14159265359...`);
+                        break;
+
                     default:
                         reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
                         break;
@@ -120,7 +134,7 @@ bot.on('message', message => {
             } else {
                 // Check for link attempt
                 if (cmd === 'link') {
-                    reply(user.linkAccount(message.author.id, args[0]));
+                    reply(user.linkAccount(message.author.username, message.author.id, args[0]));
                 } else {
                     reply(strMsgNotLinked);
                     return;
@@ -159,7 +173,7 @@ function queue(userID) {
     //Check queue
     parseQueue();
     // Return response
-    return `User ${userID} cannot be queued up since the PUG queue isn't online yet!`;
+    return `You cannot be queued up since the PUG queue isn't online yet!`;
 }
 
 // Determines viability of fair game with
@@ -173,7 +187,7 @@ function parseQueue() {
 //
 // Returns status message for user information
 function party(args) {
-    return `Parties arent available yet, sorry boio.`;
+    return `Parties arent available yet, sorry pal.`;
 }
 
 // Creates a match and provisions a server in
