@@ -3,6 +3,7 @@
 // Custom Modules
 const log = require('../util/log.js');
 const opGrabSteamID = require('./grabSteamID.js');
+const grabCSGOHours = require('./grabCSGOHours.js');
 
 /*
     Account Linker
@@ -13,10 +14,40 @@ const opGrabSteamID = require('./grabSteamID.js');
 */
 module.exports = function(username, userID, steamURL, dbconn, debug) {
     return new Promise(function(resolve, reject) {
+        //console.log('hit linkAccount start');
+        if (steamURL === undefined || steamURL === '') {
+            //console.log('undefined steamID');
+            resolve(`Please provide a steam profile URL after the command like so: \`!link <steam profile URL>\``);
+            return;
+        }
+
+        // Grab the steamIDs of the profile
         opGrabSteamID(steamURL).then(nugget => {
+            //console.log('hit opGrabSteamID start');
             if (nugget.error !== undefined) {
+                //console.log('opGrabSteamID error');
                 resolve(nugget.error);
+                return;
             }
+            // Pull the number of hours in CS:GO the player has
+            grabCSGOHours(nugget.steamid).then(hours => {
+                if (hours === -1) {
+                    resolve(`You don't seem to own CS:GO. Please link a steam account that owns CS:GO and has at least 500 hours ingame to play on KIWI.`);
+                    return;
+                } else if (hours < 500) {
+                    hoursLeft = 500 - hours;
+                    if (hoursLeft === 1) {
+                        resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play 1 more hour to qualify!`);
+                        return;
+                    } else {
+                        resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play ${hoursMore} more hours to qualify!`);
+                        return;
+                    }
+                }
+
+                resolve('linked');
+                return;
+            });
 
             // resolve(`Hey `\${username}`\, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`drop\` if you're having trouble.`);
             // resolve(`Hey `\${username}`\, I linked your Steam Profile successfully! Now just set your username using \`!name <username>\` and you'll be all set.`);
