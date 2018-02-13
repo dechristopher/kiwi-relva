@@ -24,10 +24,18 @@ class User {
     }
 
     linkAccount(username, userID, steamURL) {
-        opLinkAccount(username, userID, steamURL, this.dbc.conn(), this.debug).then(resp => {
-            return resp;
-        }).catch(err => {
-            return `An unforseen error has occurred, please contact \`drop\` immediately and try again later. [CODE: K75]`;
+        let dbconn = this.dbc.conn();
+        let debug = this.debug;
+        return new Promise(function(resolve, reject) {
+            opLinkAccount(username, userID, steamURL, dbconn, debug).then(resp => {
+                //console.log('hit opLinkAccount then()');
+                //console.log(resp);
+                resolve(resp);
+                return;
+            }).catch(err => {
+                resolve(`An unforseen error has occurred, please contact \`drop\` immediately and try again later. [CODE: K75]`);
+                return;
+            });
         });
     }
 
