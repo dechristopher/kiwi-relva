@@ -2,9 +2,20 @@
 + Addition     |
 ~ Modification |
 - Deletion     |
+! TODO / Note  |
 ---------------
 
 === R E L V A   C H A N G E L O G ===
+
+== 1.4.1 ==
+~ Modified linkAccount promisification chain in command call
++ Added string for account already linked
+~ Promisified linkAccount() chain in user.js
++ Strip 'www.' from Steam profile URLs when linking
++ Added op module to get a user's CS:GO hours (grabCSGOHours.js)
++ Check for undefined or blank Steam profile URL when linking
++ Check a user's CS:GO hours when linking. Must be over 500 hours.
+! Account linking still needs DB hits to be written
 
 == 1.4.0 ==
 ~ Modified `not linked` message
