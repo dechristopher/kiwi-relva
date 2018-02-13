@@ -12,11 +12,11 @@ const opLinkAccount = require('./ops/linkAccount.js');
 const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
 
 class User {
-    constructor(bot, dbOptions, cacheOptions, debug = false) {
+    constructor(bot, dbOptions, cacheOptions) {
         this.bot = bot;
         this.dbc = new(require('./service/dbc.js'))(dbOptions);
         this.cache = new(require('./service/cache.js'))(cacheOptions);
-        this.debug = debug;
+        this.debug = process.env.DEBUG;
     }
 
     checkLinked(userID) {

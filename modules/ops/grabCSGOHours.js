@@ -21,7 +21,7 @@ module.exports = function(steamID) {
                 resolve(-1);
             }
             let hours = parseInt(resp.body.split(' ')[0]);
-            log(hours);
+            if (process.env.DEBUG) { log(`[HOURS] ${steamID} -> ${hours} hours`); }
             resolve(hours);
         });
     });
