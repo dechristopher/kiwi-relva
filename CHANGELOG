@@ -7,6 +7,38 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.5.0 ==
+! Globally set debug mode in process.env.DEBUG so we don't
+    pass a variable around everywhere. Still needs to be fully
+    implemented accross the codebase.
++ Added formatSteamURL testing to index.js on debug
++ Added !name call in index.js
++ Implemented setUsername() in user.js
++ Structured SQL queries in avatarAssoc.js
+~ No longer spit out raw error in opCheckLinked, simply resolve with a user-friendly message
++ Implemented Steam profile URL validator
++ Implemented Steam profile URL formatter
+~ Pulled Steam profile URL formatting and validation out of grabSteamID.js
++ Added more concise logging and resolution to grabSteamID.js
++ Format Steam profile URLs in linkAccount
++ Validate Steam profile URLs in linkAccount
++ Implemented remainder of linkAccount db hits
+~ Fixed bad header comment in checkLinked.js
+~ Fixed error messages mentioning properly in checkLinked.js
+~ Fixed error messages mentioning properly in grabSteamID.js
+~ Capitalized "Steam" in error message in linkAccount.js
+~ Fixed error messages mentioning properly in linkAccount.js
+~ Fixed error messages mentioning properly in user.js
++ Added mocha for unit testing
++ Wrote unit tests for stateless modules
+- Removed erroneous testing in index.js
++ Implemented admin command to mention admins
++ Set PUG User role for user if username set successfull
++ Implemented setPUGRole() function in index.js
++ Implemented username setting operation module
++ Implemented username validation operation module
++ Implemented steamID linked but no username set checker operation module
+
 == 1.4.1 ==
 ~ Modified linkAccount promisification chain in command call
 + Added string for account already linked
