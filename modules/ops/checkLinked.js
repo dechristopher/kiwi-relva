@@ -15,7 +15,9 @@ module.exports = function(userID, dbconn, debug) {
         dbconn.query("SELECT steam_id FROM `users` WHERE `discord_id` = ? AND `username` > ''", [userID], function(error, results, fields) {
             //if (debug) { log(`${userID} ${results} ${results[0].steam_id !== undefined}`); }
             if (error) {
-                reject(error);
+                log(error);
+                resolve(`Sorry, something weird happened on our end. Contact \`drop\` immediately and try again shortly. \`[CODE: K68]\``);
+                return;
             }
             resolve((results.length === 1) ? true : false);
         });
