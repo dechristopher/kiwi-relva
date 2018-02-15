@@ -2,7 +2,6 @@
 
 // NPM Modules
 const got = require('got');
-const regex = require('regex');
 const parser = require('xml2js').parseString;
 const steam = require('steamidconvert')();
 
@@ -25,23 +24,7 @@ const log = require('../util/log.js');
 */
 module.exports = function(steamURL) {
     return new Promise(function(resolve, reject) {
-        // Steam Profile URL Regex
-        let steamURLReg = new RegExp(`(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9]+`);
         let nugget = {};
-        // Strip www. from URL (because it breaks everything)
-        if (steamURL.split('www.').length > 1) {
-            //console.log('has www.');
-            urlParts = steamURL.split('www.');
-            steamURL = urlParts[0] + urlParts[1];
-        }
-        // Ensure the given Steam Profile URL is valid
-        if (!steamURLReg.test(steamURL)) {
-            //console.log('bad steam profile URL')
-            nugget.error = `Invalid Steam Profile URL`;
-            nugget.ids = {};
-            resolve(nugget);
-        }
-        //console.log('good steam profile URL');
         // Snag some info from the XML API
         got(`${steamURL}?xml=1`).then(resp => {
             // Parse the XML as JSON
