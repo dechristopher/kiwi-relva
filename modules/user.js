@@ -7,6 +7,7 @@ const log = require('./util/log.js');
 const opAvatarAssoc = require('./ops/avatarAssoc.js');
 const opCheckLinked = require('./ops/checkLinked.js');
 const opLinkAccount = require('./ops/linkAccount.js');
+const opSetUsername = require('./ops/setUsername.js');
 
 // Data Operation Modules
 const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
@@ -33,7 +34,24 @@ class User {
                 resolve(resp);
                 return;
             }).catch(err => {
-                resolve(`An unforseen error has occurred, please contact \`drop\` immediately and try again later. [CODE: K75]`);
+                resolve(`An unforseen error has occurred, please contact \`@drop#5904\` immediately and try again later. \`[CODE: K75]\``);
+                return;
+            });
+        });
+    }
+
+    setUsername(userID, username) {
+        let dbconn = this.dbc.conn();
+        let debug = this.debug;
+        let bot = this.bot;
+        return new Promise(function(resolve, reject) {
+            opSetUsername(userID, username, bot, dbconn, debug).then(resp => {
+                //console.log('hit opSetUsername then()');
+                //console.log(resp);
+                resolve(resp);
+                return;
+            }).catch(err => {
+                resolve(`An unforseen error has occurred, please contact \`@drop#5904\` immediately and try again later. \`[CODE: K83]\``);
                 return;
             });
         });
