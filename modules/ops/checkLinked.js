@@ -1,4 +1,4 @@
-// kiwi/relva/modules/ops/avatarAssoc.js - Created February 6th, 2018
+// kiwi/relva/modules/ops/checkLinked.js - Created February 6th, 2018
 
 // Custom Modules
 const log = require('../util/log.js');
