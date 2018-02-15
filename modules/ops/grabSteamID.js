@@ -32,7 +32,7 @@ module.exports = function(steamURL) {
             parser(resp.body, (err, results) => {
                 if (err) {
                     log(`[SID PARSE ERROR] ${steamURL} -> ${err}`);
-                    nugget.error = `Failed to parse Steam Profile URL. Please try again later on after contacting \`@drop#5904\` immediately. [CODE: K76]`;
+                    nugget.error = `Failed to parse Steam Profile URL. Please try again later on after contacting \`<@119966322523242497>\` immediately. [CODE: K76]`;
                     nugget.ids = {};
                     resolve(nugget);
                 }
