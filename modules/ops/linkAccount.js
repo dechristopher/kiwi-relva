@@ -14,38 +14,48 @@ const checkValidSteamProfileURL = require('./checkValidSteamProfileURL.js');
     - dbconn (Object): reference to the database connection
     - debug (boolean): whether or not to show debug output
 */
-module.exports = function(username, userID, steamURL, dbconn, debug) {
+module.exports = function(username, userID, steamProfURL, dbconn, debug) {
     return new Promise(function(resolve, reject) {
         //console.log('hit linkAccount start');
-        if (steamURL === undefined || steamURL === '') {
+        if (steamProfURL === undefined || steamProfURL === '') {
             //console.log('undefined steamID');
             resolve(`Please provide a steam profile URL after the command like so: \`!link <steam profile URL>\``);
             return;
         }
 
-        // Grab the steamIDs of the profile
-        opGrabSteamID(steamURL).then(nugget => {
-            //console.log('hit opGrabSteamID start');
-            if (nugget.error !== undefined) {
-                //console.log('opGrabSteamID error');
-                resolve(nugget.error);
+
+        checkValidSteamProfileURL(steamProfURL).then(valid => {
+            if (!valid) {
+                resolve(`Invalid Steam Profile URL`);
                 return;
             }
-            // Pull the number of hours in CS:GO the player has
-            grabCSGOHours(nugget.steamid).then(hours => {
-                if (hours === -1) {
-                    resolve(`You don't seem to own CS:GO. Please link a steam account that owns CS:GO and has at least 500 hours ingame to play on KIWI.`);
-                    return;
-                } else if (hours < 500) {
-                    hoursLeft = 500 - hours;
-                    if (hoursLeft === 1) {
-                        resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play 1 more hour to qualify!`);
-                        return;
-                    } else {
-                        resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play ${hoursMore} more hours to qualify!`);
+            // Format Steam Profile URL
+            formatSteamURL(steamProfURL).then(steamURL => {
+                // Grab the steamIDs of the profile
+                opGrabSteamID(steamURL).then(nugget => {
+                    //console.log('hit opGrabSteamID start');
+                    if (nugget.error !== undefined) {
+                        //console.log('opGrabSteamID error');
+                        resolve(nugget.error);
                         return;
                     }
-                }
+                    //console.dir(nugget);
+                    //console.log('! -> ' + nugget.ids.steamid);
+                    // Pull the number of hours in CS:GO the player has
+                    grabCSGOHours(nugget.ids.steamid).then(hours => {
+                        if (hours === -1) {
+                            resolve(`You don't seem to own CS:GO. Please link a steam account that owns CS:GO and has at least 500 hours ingame to play on KIWI.`);
+                            return;
+                        } else if (hours < 500) {
+                            hoursLeft = 500 - hours;
+                            if (hoursLeft === 1) {
+                                resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play 1 more hour to qualify!`);
+                                return;
+                            } else {
+                                resolve(`You must have played at least 500 hours of CS:GO to play on KIWI. You have ${hours} hours. Play ${hoursMore} more hours to qualify!`);
+                                return;
+                            }
+                        }
 
                 resolve('linked');
                 return;
