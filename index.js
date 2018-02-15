@@ -12,6 +12,7 @@ const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const help = require('./modules/help.js');
 const grabSteamID = require('./modules/ops/grabSteamID.js');
+const formatSteamURL = require('./modules/ops/formatSteamURL.js');
 let user;
 
 // Build configuration
@@ -61,6 +62,24 @@ bot.on('ready', function() {
         grabSteamID('https://steamcommunity.com/id/dropisbae').then((nugget) => {
             console.log(nugget.error);
             console.dir(nugget.ids);
+        });
+        formatSteamURL('https://steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
+        });
+        formatSteamURL('http://steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
+        });
+        formatSteamURL('https://www.steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
+        });
+        formatSteamURL('http://www.steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
+        });
+        formatSteamURL('steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
+        });
+        formatSteamURL('www.steamcommunity.com/id/dropisbae').then(url => {
+            console.log(url);
         });
     }
 });
