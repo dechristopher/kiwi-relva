@@ -162,6 +162,10 @@ bot.on('message', message => {
                     user.linkAccount(message.author.username, message.author.id, args[0]).then(resp => {
                         reply(resp);
                     });
+                } else if (cmd === 'name') {
+                    user.setUsername(message.author.id, args[0]).then(resp => {
+                        reply(resp);
+                    });
                 } else {
                     reply(strMsgNotLinked);
                     return;
