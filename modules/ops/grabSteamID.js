@@ -27,11 +27,12 @@ module.exports = function(steamURL) {
         let nugget = {};
         // Snag some info from the XML API
         got(`${steamURL}?xml=1`).then(resp => {
+            if (process.env.DEBUG) { console.log('Hit Steam XML -> ' + steamURL); }
             // Parse the XML as JSON
             parser(resp.body, (err, results) => {
                 if (err) {
                     log(`[SID PARSE ERROR] ${steamURL} -> ${err}`);
-                    nugget.error = `Failed to parse Steam Profile URL. Please try again later on after contacting \`drop\` immediately. [CODE: K76]`;
+                    nugget.error = `Failed to parse Steam Profile URL. Please try again later on after contacting \`@drop#5904\` immediately. [CODE: K76]`;
                     nugget.ids = {};
                     resolve(nugget);
                 }
