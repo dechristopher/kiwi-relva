@@ -19,7 +19,7 @@ module.exports = function(username, userID, steamProfURL, dbconn, debug) {
         //console.log('hit linkAccount start');
         if (steamProfURL === undefined || steamProfURL === '') {
             //console.log('undefined steamID');
-            resolve(`Please provide a steam profile URL after the command like so: \`!link <steam profile URL>\``);
+            resolve(`Please provide a steam profile URL after the command like so: \`!link <Steam profile URL>\``);
             return;
         }
 
