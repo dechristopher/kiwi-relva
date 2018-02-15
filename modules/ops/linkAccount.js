@@ -60,20 +60,20 @@ module.exports = function(username, userID, steamProfURL, dbconn, debug) {
                         dbconn.query("SELECT * FROM `users` WHERE `steam_profile_url` = ?", [steamURL], function(error, results, fields) {
                             if (error) {
                                 log(error);
-                                resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`@drop#5904\` immediately and try again shortly. \`[CODE: K81]\``);
+                                resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`<@119966322523242497>\` immediately and try again shortly. \`[CODE: K81]\``);
                                 return;
                             }
 
                             if (results.length === 1) {
                                 // Account already has steam profile linked
                                 log(`[Steam Profile Already Linked] -> ${steamURL}`);
-                                resolve(`Hey \`${username}\`, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`@drop#5904\` if you're having trouble.`);
+                                resolve(`Hey \`${username}\`, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`<@119966322523242497>\` if you're having trouble.`);
                                 return;
                             } else {
                                 dbconn.query("INSERT INTO `users` (discord_id, steam_id, steam_id_64, steam_id_3, steam_profile_url) VALUES (?, ?, ?, ?, ?)", [userID, nugget.ids.steamid, nugget.ids.steamid64, nugget.ids.steamid3, steamURL], function(error, results, fields) {
                                     if (error) {
                                         log(error);
-                                        resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`@drop#5904\` immediately and try again shortly. \`[CODE: K82]\``);
+                                        resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`<@119966322523242497>\` immediately and try again shortly. \`[CODE: K82]\``);
                                         return;
                                     }
                                     if (debug) { log(`Linked ${userID} to ${steamURL} in db`); }
