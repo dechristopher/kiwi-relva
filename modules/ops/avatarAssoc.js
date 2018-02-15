@@ -25,7 +25,7 @@ module.exports = function(userID, avatarURL, dbconn, cconn, debug) {
                     return;
                 } else {
                     // Update the changed avatar in the database
-                    dbconn.query('UPDATE `users` SET discord_avatar_url = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
+                    dbconn.query('UPDATE `users` SET `discord_avatar_url` = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
                         if (debug) { log(`Set ${userID} avatar to ${avatarURL} in db`); }
                     });
                     // Update the changed avatar in the cache
@@ -36,7 +36,7 @@ module.exports = function(userID, avatarURL, dbconn, cconn, debug) {
             });
         } else {
             // Set the avatar in the database
-            dbconn.query('UPDATE `users` SET discord_avatar_url = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
+            dbconn.query('UPDATE `users` SET `discord_avatar_url` = ? WHERE `discord_id` = ?', [avatarURL, userID], function(error, results, fields) {
                 if (debug) { log(`Set ${userID} avatar to ${avatarURL} in db`); }
             });
             // Set the avatar in the cache
