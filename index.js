@@ -124,6 +124,10 @@ bot.on('message', message => {
                         reply(`3.14159265359...`);
                         break;
 
+                    case 'admin':
+                        reply(`<@119966322523242497> will be able to help with whatever questions you may have.`);
+                        break;
+
                     default:
                         reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
                         break;
