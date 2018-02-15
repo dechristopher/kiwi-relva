@@ -140,6 +140,9 @@ bot.on('message', message => {
                     });
                 } else if (cmd === 'name') {
                     user.setUsername(message.author.id, args[0]).then(resp => {
+                        if (resp.includes("#kiwipugs")) {
+                            setPUGRole(message.author);
+                        }
                         reply(resp);
                     });
                 } else {
