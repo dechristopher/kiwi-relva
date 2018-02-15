@@ -173,6 +173,15 @@ function checkYourPrivilege(userID) {
     return 0;
 }
 
+function setPUGRole(user) {
+    setTimeout(function() {
+        log(`Set PUG User -> ${user.username} (${user.id})`);
+        guild.fetchMember(user).then(member => {
+            member.addRole(conf.server.pugRole);
+        });
+    }, 5000);
+}
+
 // Toggle player or party queue status
 // Additionally runs checks to see if enqueued
 // entities satisfy match being ptovisioned
