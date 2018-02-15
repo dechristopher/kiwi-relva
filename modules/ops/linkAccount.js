@@ -4,6 +4,8 @@
 const log = require('../util/log.js');
 const opGrabSteamID = require('./grabSteamID.js');
 const grabCSGOHours = require('./grabCSGOHours.js');
+const formatSteamURL = require('./formatSteamURL.js');
+const checkValidSteamProfileURL = require('./checkValidSteamProfileURL.js');
 
 /*
     Account Linker
