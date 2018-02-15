@@ -34,7 +34,7 @@ class User {
                 resolve(resp);
                 return;
             }).catch(err => {
-                resolve(`An unforseen error has occurred, please contact \`@drop#5904\` immediately and try again later. \`[CODE: K75]\``);
+                resolve(`An unforseen error has occurred, please contact \`<@119966322523242497>\` immediately and try again later. \`[CODE: K75]\``);
                 return;
             });
         });
@@ -45,13 +45,13 @@ class User {
         let debug = this.debug;
         let bot = this.bot;
         return new Promise(function(resolve, reject) {
-            opSetUsername(userID, username, bot, dbconn, debug).then(resp => {
+            opSetUsername(userID, username, dbconn, debug).then(resp => {
                 //console.log('hit opSetUsername then()');
                 //console.log(resp);
                 resolve(resp);
                 return;
             }).catch(err => {
-                resolve(`An unforseen error has occurred, please contact \`@drop#5904\` immediately and try again later. \`[CODE: K83]\``);
+                resolve(`An unforseen error has occurred, please contact \`<@119966322523242497>\` immediately and try again later. \`[CODE: K83]\``);
                 return;
             });
         });
