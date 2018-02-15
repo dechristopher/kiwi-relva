@@ -57,17 +57,34 @@ module.exports = function(username, userID, steamProfURL, dbconn, debug) {
                             }
                         }
 
-                resolve('linked');
-                return;
+                        dbconn.query("SELECT * FROM `users` WHERE `steam_profile_url` = ?", [steamURL], function(error, results, fields) {
+                            if (error) {
+                                log(error);
+                                resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`@drop#5904\` immediately and try again shortly. \`[CODE: K81]\``);
+                                return;
+                            }
+
+                            if (results.length === 1) {
+                                // Account already has steam profile linked
+                                log(`[Steam Profile Already Linked] -> ${steamURL}`);
+                                resolve(`Hey \`${username}\`, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`@drop#5904\` if you're having trouble.`);
+                                return;
+                            } else {
+                                dbconn.query("INSERT INTO `users` (discord_id, steam_id, steam_id_64, steam_id_3, steam_profile_url) VALUES (?, ?, ?, ?, ?)", [userID, nugget.ids.steamid, nugget.ids.steamid64, nugget.ids.steamid3, steamURL], function(error, results, fields) {
+                                    if (error) {
+                                        log(error);
+                                        resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`@drop#5904\` immediately and try again shortly. \`[CODE: K82]\``);
+                                        return;
+                                    }
+                                    if (debug) { log(`Linked ${userID} to ${steamURL} in db`); }
+                                    resolve(`Hey \`${username}\`, I linked your Steam Profile successfully! Now just set your KIWI username using \`!name <username>\` and you'll be off to the races! Note this username is the alias you'll show up as ingame.`);
+                                    return;
+                                });
+                            }
+                        });
+                    });
+                });
             });
-
-            // resolve(`Hey `\${username}`\, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`drop\` if you're having trouble.`);
-            // resolve(`Hey `\${username}`\, I linked your Steam Profile successfully! Now just set your username using \`!name <username>\` and you'll be all set.`);
-
-            // Check to see if steamID is already associated with an account
-            //  - Error out if exists
-            //  - Else add info to DB
-            //      - Then send back prompt to the user to set their username
         });
     });
 };
