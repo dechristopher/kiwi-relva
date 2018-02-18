@@ -278,6 +278,8 @@ function terminate() {
         log(strInitShutdown, { newLinePre: true }).then(() => {
             log(strLogSeparator, { stdOut: false, usePrefix: false }).then(() => {
                 // Close db, rcon connections, and etc...
+                user.dbc.conn().destroy();
+                user.cache.conn().end();
                 // Terminate with exit code 0
                 process.exit(0);
             });
