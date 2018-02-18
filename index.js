@@ -77,6 +77,11 @@ bot.on('ready', function() {
     baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
 });
 
+// Hit when entity joins the queue
+queue.on('queueJoin', function(entity) {
+
+});
+
 // Called when bot receives messages
 // message => https://discord.js.org/#/docs/main/stable/class/Message
 bot.on('message', message => {
