@@ -290,6 +290,22 @@ function createMatchRoom(id) {
     });
 }
 
+/**
+ * Creates party channel with specified id under the PARTIES category
+ * @param {string} [id] the id of the party channel
+ * @returns {Promise<GuildChannel>} the channel that was created
+ * @throws {Promise<string>} error message on rejection
+ */
+function createPartyChannel(id) {
+    return new Promise(function(resolve, reject) {
+        basePartyChannel.clone(`party-${id}`, true, true).then((channel) => {
+            channel.setParent(conf.server.partyCategory);
+            partyChannels.set(id, channel);
+            log(`Created party channel: ${channel.name}`);
+            resolve(channel);
+        }).catch(() => {
+            reject(`FAIL [createPartyChannel: party-${id}]`);
+        });
     });
 }
 
