@@ -16,6 +16,10 @@ const perms = require('./modules/perms.js');
 let queue = new(require('./modules/queue.js'))();
 let user;
 
+// Custom Types
+let Solo = require('./modules/types/Solo.js');
+let Party = require('./modules/types/Party.js');
+
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
 const priv = JSON.parse(fs.readFileSync('./priv.json'));
