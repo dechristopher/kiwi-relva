@@ -12,6 +12,7 @@ const os = require('os');
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const help = require('./modules/help.js');
+const perms = require('./modules/perms.js');
 let user;
 
 // Build configuration
