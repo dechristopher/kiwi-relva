@@ -106,6 +106,7 @@ bot.on('message', message => {
         reply(strMsgNoDM);
         return;
     }
+    message.channel.startTyping();
 
     // Listen for messages that start with `!`
     if (message.content.substring(0, 1) == '!') {
@@ -179,7 +180,6 @@ bot.on('message', message => {
                     });
                 } else {
                     reply(strMsgNotLinked);
-                    return;
                 }
             }
         }).catch((err) => {
@@ -187,8 +187,7 @@ bot.on('message', message => {
             reply(`Error! We're looking into it...`);
         });
 
-        // Ensure user has a linked steam account
-
+        message.channel.stopTyping();
     }
 });
 
