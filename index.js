@@ -46,6 +46,10 @@ let bot = new Discord.Client();
 // The discord server the bot is a part of
 let guild;
 
+// Party Channel storage { Collection<string, GuildChannel> }
+let partyChannels = new Collection();
+// MatchRoom Channel storage { Collection<string, GuildChannel> }
+let matchRoomChannels = new Collection();
 // Debug mode enabled
 if (process.argv.indexOf("debug") > -1) {
     process.env.DEBUG = true;
