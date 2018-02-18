@@ -66,7 +66,7 @@ let debug = process.env.DEBUG;
 
 // Called when bot is connected
 bot.on('ready', function() {
-    log(`Logged in as: ${bot.user.username} => (${bot.user.id})`);
+    log(`Login: ${bot.user.username} => (${bot.user.id})`);
     // Instantiate the user module and service factories
     user = new(require('./modules/user.js'))(bot, conf.db, conf.cache);
     // Set the guild reference
