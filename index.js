@@ -256,6 +256,9 @@ function party(user, args) {
  * @param {string} [region] the region to spawn the server in
  * @param {Collection<string, User>} players a list of players in the match
  */
+function provisionMatch(region, players) {
+    // TODO
+}
 
 }
 
