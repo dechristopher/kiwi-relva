@@ -230,8 +230,7 @@ function setPUGRole(user) {
  */
 function enqueue(entity) {
     //TODO: Add to queue
-    //Check queue
-    parseQueue();
+    //queue.emit('queueJoin', entity);
     // Return response
     return `You cannot be queued up since the PUG queue isn't online yet!`;
 }
