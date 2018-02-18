@@ -144,7 +144,7 @@ bot.on('message', message => {
 
                     case 'q':
                     case 'queue':
-                        reply(queue(message.author.id));
+                        reply(enqueue(message.author.id));
                         break;
 
                     case 'p':
@@ -218,7 +218,7 @@ function setPUGRole(user) {
 // entities satisfy match being ptovisioned
 //
 // Returns status message for user information
-function queue(userID) {
+function enqueue(entity) {
     //TODO: Add to queue
     //Check queue
     parseQueue();
