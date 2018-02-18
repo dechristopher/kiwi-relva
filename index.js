@@ -75,6 +75,12 @@ bot.on('ready', function() {
     basePartyChannel = guild.channels.get(conf.server.partyBaseID);
     // Set the base matchRoom channel template
     baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
+    queue.emit('queueInit', guild.id);
+});
+
+// Hit when queue is initialized
+queue.on('queueInit', function(guildID) {
+    log(`Queue Initialized: ${guildID}`);
 });
 
 // Hit when entity joins the queue
