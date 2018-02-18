@@ -1,0 +1,94 @@
+=== RELVA PARTY AND QUEUING ARCHITECTURE SPEC ===
+
+PARTIES consist of multiple users (from 2-5)
+
+They will need to be stored in-memory since KIWI Bot (relva) only has one instance.
+
+Parties are accessed through a KV store, key being the party id, value being
+the party object
+
+Party leaders are associated with parties easily through a separate KV store,
+key being their userID and the value being the partyID
+
+// Party object
+{
+    "type": "party",
+    "id": "(random 7-character alphanumeric beginning with K) K8d0wl5"
+    "region": "us-e",
+    "size": 3,
+    "leaderID": "(user id)",
+    "leader": leader GuildMember object
+    "joinCode": "(random)"
+    "members": [
+        {}, // guild member objects
+        {},
+        {}
+    ]
+}
+
+When a party is created, a discord channel will be created with the partyID:
+
+`Party [K8d0wl5]`
+
+This channel will then be used for all party-related commands. The only party commands
+that work outside of a party channel are the party creation and party joining commands.
+
+Party channels will be kept track of in a separate KV store, key being the partyID,
+value being the discord.js Channel object
+
+Party Access / Mutation:
+    Party Leader:
+        - can disband party
+        - can remove players from party
+        - can promote another player to party leader
+        - can generate new join codes
+        - can queue up the party
+        - can de-queue the party
+        - can do anything a party member can
+    Party Member:
+        - can run info commands about the party
+        - can view party stats
+        - can leave the party
+
+
+
+-----------------------------------------------------------------------------------------
+
+QUEUING is handled similarly to the way parties are:
+
+The queue stores entity objects that can either be parties or single players
+
+When a party queues up, their party object is used to represent the entity queued
+When a single player queues up, an object is created to represent them:
+
+// Solo Player object
+{
+    "type": "solo",
+    "id": "(random 7-character alphanumeric beginning with K) K7c01ud"
+    "region": "us-e",
+    "size": 1,
+    "members": [
+        {}, // guild member object
+    ]
+}
+
+Mostly similar to the party object, the solo player object simply removes the
+leader property.
+
+Solo players will interact with the queue through the #kiwipugs channel
+
+Party players will have all queue commands disabled for them in the #kiwipugs channel
+and will be forced to use their respective party channel and have their leader queue
+them up.
+
+The queue "daemon" should just listen for queue change (join/leave) events and then run
+checks and algorithms to see if a match can be created with the current state of the
+queue. Other events should include:
+    - partyJoin
+    - partyLeave
+    - soloJoin
+    - soloLeave
+    - queuePop (run some analytics)
+
+
+
