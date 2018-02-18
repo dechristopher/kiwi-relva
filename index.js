@@ -2,6 +2,7 @@
 
 // NPM modules
 const Discord = require('discord.js');
+const Collection = require('discord.js').Collection;
 
 // Core Node Modules
 const fs = require('fs');
