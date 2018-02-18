@@ -7,6 +7,38 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.5.1 ==
+~ Use discord.js#11.3-dev
++ Created perms storage module perms.js
++ Documented party and queue architectures
++ Implemented and deprecated object kv store in kv.js
++ Implemented queue storage and events module queue.js
++ Implemented ID generation module genID.js
++ Implemented QueueEntity interface QueueEntity.js
++ Implemented solo queue player class Solo.js
++ Implemented Party queue object class Party.js
++ Include Collections class from discord.js in index.js
++ Include perms storage module in index.js
++ Include and instantiate queue module in index.js
++ Include Solo and Party classes in index.js
++ Implemented party and match room channel storage collections in index.js
++ Set references to base party and match room template channels in index.js
+~ Made bot login message more concise
++ Added onQueueJoin handler in index.js
++ Added onQueueInit handler and emission in index.js
++ Force the bot to faux type to look more real
+~ Changed queue() to enqueue() in index.js
++ Destroy db and cache connections on shutdown
+~ Improved documentation project-wide in index.js
++ Added bot onWarning and onError event handlers
++ Emit queueJoin event on enqueue()
+~ Changed provisionMatch parameters
++ Added bunch of temp party and channel testing
++ Implemented createMatchRoom() function
++ Implemented createPartyChannel() function
++ Implemented deleteChannel() function
+
+
 == 1.5.0 ==
 ! Globally set debug mode in process.env.DEBUG so we don't
     pass a variable around everywhere. Still needs to be fully
