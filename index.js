@@ -50,6 +50,12 @@ let guild;
 let partyChannels = new Collection();
 // MatchRoom Channel storage { Collection<string, GuildChannel> }
 let matchRoomChannels = new Collection();
+
+// Base party channel to clone new party channels from { GuildChannel }
+let basePartyChannel;
+// Base matchRoom channel to clone new matchRoom channels from { GuildChannel }
+let baseMatchRoomChannel;
+
 // Debug mode enabled
 if (process.argv.indexOf("debug") > -1) {
     process.env.DEBUG = true;
@@ -65,6 +71,10 @@ bot.on('ready', function() {
     user = new(require('./modules/user.js'))(bot, conf.db, conf.cache);
     // Set the guild reference
     guild = bot.guilds.first();
+    // Set the base party channel template
+    basePartyChannel = guild.channels.get(conf.server.partyBaseID);
+    // Set the base matchRoom channel template
+    baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
 });
 
 // Called when bot receives messages
