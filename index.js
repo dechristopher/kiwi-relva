@@ -13,6 +13,7 @@ const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const help = require('./modules/help.js');
 const perms = require('./modules/perms.js');
+let queue = new(require('./modules/queue.js'))();
 let user;
 
 // Build configuration
