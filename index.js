@@ -88,6 +88,11 @@ queue.on('queueJoin', function(entity) {
 
 });
 
+bot.on('warn', console.warn);
+bot.on('error', console.error);
+//bot.on('disconnect', log('DISCONNECTED'));
+//bot.on('reconnecting', log('RECONNECTING'));
+
 // Called when bot receives messages
 // message => https://discord.js.org/#/docs/main/stable/class/Message
 bot.on('message', message => {
