@@ -309,6 +309,34 @@ function createPartyChannel(id) {
     });
 }
 
+/**
+ * Deletes a channel given the channel object
+ * @param {GuildChannel} [channel] the party channel to delete
+ * @param {string} [type='party'] the type of channel (party or match room)
+ * @returns {Promise<GuildChannel>} the channel that was deleted
+ * @throws {Promise<string>} error message on rejection
+ */
+function deleteChannel(channel, type = 'party') {
+    return new Promise(function(resolve, reject) {
+        channel.delete(`Closing channel/matchroom: ${channel.name}`).then((channel) => {
+            if (type === 'party') {
+                let key = partyChannels.findKey('id', channel.id);
+                partyChannels.delete(key);
+                log(`Deleted party channel: ${channel.name}`);
+            } else if (type === 'match') {
+                let key = matchRoomChannels.findKey('id', channel.id);
+                matchRoomChannels.delete(key);
+                log(`Deleted match room channel: ${channel.name}`);
+            } else {
+                reject(`FAIL [deleteChannel: invalid channel type -> ${type}`);
+            }
+            resolve(channel);
+        }).catch(() => {
+            reject(`FAIL [deleteChannel: ${channel.name}`);
+        });
+    });
+}
+
 // Sends DMs to players selected for a new match
 // Also adds them to the created match room
 function provisionClients(channel, players = ['drop', 'sparks']) {
