@@ -43,7 +43,7 @@ const strMsgAbout = `I'm KIWI Bot! Use me like your sick puppet and bend me to y
 // Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
 let bot = new Discord.Client();
 
-// The discord server the bot is a part of
+// The discord server the bot is a part of { Guild }
 let guild;
 
 // Party Channel storage { Collection<string, GuildChannel> }
@@ -191,11 +191,12 @@ bot.on('message', message => {
     }
 });
 
-// Checks for and returns a user's privilege level
-// 2 - admin
-// 1 - mod
-// 0 - normal
-function checkYourPrivilege(userID) {
+/**
+ * Checks for and returns a user's privilege level
+ * @param {string} [id] the userID to check
+ */
+
+function checkYourPrivilege(id) {
     for (let i = 0; i < priv.users.length; i++) {
         if (priv.users[i].userID == userID) {
             return users[i].level;
@@ -204,6 +205,10 @@ function checkYourPrivilege(userID) {
     return 0;
 }
 
+/**
+ * Gives the provided user the PUG Player role
+ * @param {GuildMember} [user] the user to give the role to
+ */
 function setPUGRole(user) {
     setTimeout(function() {
         log(`Set PUG User -> ${user.username} (${user.id})`);
@@ -213,11 +218,11 @@ function setPUGRole(user) {
     }, 5000);
 }
 
-// Toggle player or party queue status
-// Additionally runs checks to see if enqueued
-// entities satisfy match being ptovisioned
-//
-// Returns status message for user information
+/**
+ * Toggle player or party queue status
+ * @param {QueueEntity} [entity] the entity to queue
+ * @returns {string} status message for user information
+ */
 function enqueue(entity) {
     //TODO: Add to queue
     //Check queue
@@ -229,20 +234,24 @@ function enqueue(entity) {
 // Determines viability of fair game with
 // active queued players and parties
 function parseQueue() {
-
+    // TODO
 }
 
-// Allows the user to operate on their currently
-// joined party or to join or create a different one
-//
-// Returns status message for user information
-function party(args) {
+/**
+ * Operate on the party the user is a part of
+ * @param {GuildMember} [user] the user running the command
+ * @param {string[]} [args] subcommands and parameters
+ * @returns {string} command response text
+ */
+function party(user, args) {
     return `Parties arent available yet, sorry pal.`;
 }
 
-// Creates a match and provisions a server in
-// the selected region with the specified players
-function provisionMatch(params = { players: ['drop', 'sparks'], region: 'us-ma' }) {
+/**
+ * Creates a match and provisions a server in the selected region with the specified players
+ * @param {string} [region] the region to spawn the server in
+ * @param {Collection<string, User>} players a list of players in the match
+ */
 
 }
 
@@ -262,7 +271,10 @@ function provisionClients(channel, players = ['drop', 'sparks']) {
 
 }
 
-// Initiate shutdown procedures
+/**
+ * Inititates shutdown procedures
+ * @returns nothing
+ */
 function terminate() {
     // Hard quit if service cannot gracefully shutdown after 10 seconds
     setTimeout(function() {
