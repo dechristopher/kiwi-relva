@@ -271,15 +271,25 @@ function provisionMatch(region, players) {
     // TODO
 }
 
+/**
+ * Creates match room channel with specified id under the MATCH ROOMS category
+ * @param {string} [id] the id of the match room channel
+ * @returns {Promise<GuildChannel>} the channel that was created
+ * @throws {Promise<string>} error message on rejection
+ */
+function createMatchRoom(id) {
+    return new Promise(function(resolve, reject) {
+        baseMatchRoomChannel.clone(`match-pug-${id}`, true, true).then((channel) => {
+            channel.setParent(conf.server.matchRoomCategory);
+            matchRoomChannels.set(id, channel);
+            log(`Created matchroom: ${channel.name}`);
+            resolve(channel);
+        }).catch(() => {
+            reject(`FAIL [createMatchRoom: party-${id}]`);
+        });
+    });
 }
 
-// Creates match room with specified matchID and
-// returns channel object to the calling function
-function createMatchRoom(matchID) {
-    guild.createChannel(`matchroom-pug-${matchID}`, 'text').then((channel) => {
-        channel.setParent(conf.matchRoomCategory);
-        log(`Created matchroom ${channel.name};`);
-        return channel;
     });
 }
 
