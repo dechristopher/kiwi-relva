@@ -28,7 +28,7 @@ class RedisConnection {
 
         this.connection.on("ready", function() {
             //this.connection.auth(options.password);
-            log(`[cache] Ready`);
+            log(`[cache] Cache ready`);
         });
     }
 
