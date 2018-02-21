@@ -7,6 +7,7 @@ const steam = require('steamidconvert')();
 
 // Custom Modules
 const log = require('../util/log.js');
+const dlog = require('../util/dlog.js');
 
 /*
     Steam URL to SteamID parser
@@ -27,7 +28,7 @@ module.exports = function(steamURL) {
         let nugget = {};
         // Snag some info from the XML API
         got(`${steamURL}?xml=1`).then(resp => {
-            if (process.env.DEBUG) { console.log('Hit Steam XML -> ' + steamURL); }
+            dlog('Hit Steam XML -> ' + steamURL);
             // Parse the XML as JSON
             parser(resp.body, (err, results) => {
                 if (err) {
