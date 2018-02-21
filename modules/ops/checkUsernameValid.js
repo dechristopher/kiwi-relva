@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/checkLinkedNoUsername.js - Created February 15th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
+const dlog = require('../util/dlog.js');
 
 /*
     Account link checker (no username set)
@@ -15,6 +15,8 @@ module.exports = function(username) {
         // alpha-numerics, underscores, and dashes only
         // more than two characters
         let usernameRegex = /^[a-zA-Z0-9-_]+$/;
-        resolve((usernameRegex.test(username)) && (username.length >= 2));
+        let result = (usernameRegex.test(username)) && (username.length >= 2);
+        dlog(`${username} valid? ${result}`);
+        resolve(result);
     });
 };
