@@ -4,7 +4,7 @@
 const regex = require('regex');
 
 // Custom Modules
-const log = require('../util/log.js');
+const dlog = require('../util/dlog.js');
 
 /*
     SteamProfile URL formatter
@@ -16,11 +16,8 @@ module.exports = function(steamURL) {
     // Run checks
     return new Promise(function(resolve, reject) {
         // Ensure the given Steam Profile URL is valid
-        if (steamURLReg.test(steamURL)) {
-            //console.log('bad steam profile URL')
-            resolve(true);
-            return;
-        }
-        resolve(false);
+        let result = steamURLReg.test(steamURL);
+        dlog(`${steamURL} valid? ${result}`);
+        resolve(result);
     });
 };
