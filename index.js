@@ -11,6 +11,7 @@ const os = require('os');
 // Custom modules
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
+const dlog = require('./modules/util/dlog.js');
 const help = require('./modules/help.js');
 const perms = require('./modules/perms.js');
 let queue = new(require('./modules/queue.js'))();
@@ -59,6 +60,7 @@ let baseMatchRoomChannel;
 // Debug mode enabled
 if (process.argv.indexOf("debug") > -1) {
     process.env.DEBUG = true;
+    dlog(`DEBUGGING ENABLED`);
 } else {
     process.env.DEBUG = false;
 }
@@ -83,7 +85,7 @@ bot.on('ready', function() {
     createPartyChannel(party1.id).then(channel => {
         channel.send("it works!", { reply: guild });
         deleteChannel(channel, 'party').then((channel) => {
-            console.log('it works here too!');
+            dlog('It works here too!');
         });
     });
     queue.emit('queueInit', guild.id);
@@ -227,7 +229,7 @@ function checkYourPrivilege(id) {
  */
 function setPUGRole(user) {
     setTimeout(function() {
-        log(`Set PUG User -> ${user.username} (${user.id})`);
+        dlog(`Set PUG User -> ${user.username} (${user.id})`);
         guild.fetchMember(user).then(member => {
             member.addRole(conf.server.pugRole);
         });
@@ -282,7 +284,7 @@ function createMatchRoom(id) {
         baseMatchRoomChannel.clone(`match-pug-${id}`, true, true).then((channel) => {
             channel.setParent(conf.server.matchRoomCategory);
             matchRoomChannels.set(id, channel);
-            log(`Created matchroom: ${channel.name}`);
+            dlog(`Created matchroom: ${channel.name}`);
             resolve(channel);
         }).catch(() => {
             reject(`FAIL [createMatchRoom: party-${id}]`);
@@ -301,7 +303,7 @@ function createPartyChannel(id) {
         basePartyChannel.clone(`party-${id}`, true, true).then((channel) => {
             channel.setParent(conf.server.partyCategory);
             partyChannels.set(id, channel);
-            log(`Created party channel: ${channel.name}`);
+            dlog(`Created party channel: ${channel.name}`);
             resolve(channel);
         }).catch(() => {
             reject(`FAIL [createPartyChannel: party-${id}]`);
@@ -322,11 +324,11 @@ function deleteChannel(channel, type = 'party') {
             if (type === 'party') {
                 let key = partyChannels.findKey('id', channel.id);
                 partyChannels.delete(key);
-                log(`Deleted party channel: ${channel.name}`);
+                dlog(`Deleted party channel: ${channel.name}`);
             } else if (type === 'match') {
                 let key = matchRoomChannels.findKey('id', channel.id);
                 matchRoomChannels.delete(key);
-                log(`Deleted match room channel: ${channel.name}`);
+                dlog(`Deleted match room channel: ${channel.name}`);
             } else {
                 reject(`FAIL [deleteChannel: invalid channel type -> ${type}`);
             }
