@@ -7,6 +7,16 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.5.2 ==
++ Implemented debug logging module modules/util/dlog.js
+~ Improved cache ready message
++ Implemented debug logging module in linkAccount.js
++ Implemented debug logging module in getSteamID.js
++ Implemented debug logging module in grabCSGOHours.js
++ Implemented debug logging module in grabCSGOHours.js and improved control flow
++ Implemented debug logging module in checkUsernameValid.js and improved control flow
++ Implemented debug logging module in avatarAssoc.js
+
 == 1.5.1 ==
 ~ Use discord.js#11.3-dev
 + Created perms storage module perms.js
