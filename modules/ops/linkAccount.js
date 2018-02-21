@@ -2,6 +2,7 @@
 
 // Custom Modules
 const log = require('../util/log.js');
+const dlog = require('../util/dlog.js');
 const opGrabSteamID = require('./grabSteamID.js');
 const grabCSGOHours = require('./grabCSGOHours.js');
 const formatSteamURL = require('./formatSteamURL.js');
@@ -66,7 +67,7 @@ module.exports = function(username, userID, steamProfURL, dbconn, debug) {
 
                             if (results.length === 1) {
                                 // Account already has steam profile linked
-                                log(`[Steam Profile Already Linked] -> ${steamURL}`);
+                                dlog(`[Steam Profile Already Linked] -> ${steamURL}`);
                                 resolve(`Hey \`${username}\`, this Steam Profile looks like it's already being used by someone else. Check it again and contact \`<@119966322523242497>\` if you're having trouble.`);
                                 return;
                             } else {
@@ -76,7 +77,7 @@ module.exports = function(username, userID, steamProfURL, dbconn, debug) {
                                         resolve(`Sorry \`${username}\`, something weird happened on our end. Contact \`<@119966322523242497>\` immediately and try again shortly. \`[CODE: K82]\``);
                                         return;
                                     }
-                                    if (debug) { log(`Linked ${userID} to ${steamURL} in db`); }
+                                    dlog(`Linked ${userID} to ${steamURL} in db`);
                                     resolve(`Hey \`${username}\`, I linked your Steam Profile successfully! Now just set your KIWI username using \`!name <username>\` and you'll be off to the races! Note this username is the alias you'll show up as ingame.`);
                                     return;
                                 });
