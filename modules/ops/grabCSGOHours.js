@@ -4,7 +4,7 @@
 const got = require('got');
 
 // Custom Modules
-const log = require('../util/log.js');
+const dlog = require('../util/dlog.js');
 
 /*
     CS:GO Hours Grabber
@@ -21,7 +21,7 @@ module.exports = function(steamID) {
                 resolve(-1);
             }
             let hours = parseInt(resp.body.split(' ')[0]);
-            if (process.env.DEBUG) { log(`[HOURS] ${steamID} -> ${hours} hours`); }
+            dlog(`[HOURS] ${steamID} -> ${hours} hours`);
             resolve(hours);
         });
     });
