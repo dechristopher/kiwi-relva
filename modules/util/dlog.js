@@ -2,6 +2,10 @@
 
 // NPM Modules
 const log = require('./log.js');
+const c = require('chalk');
+
+// Static variables
+const DEBUG = `[${c.cyan('debug')}] `;
 
 /**
  * Logs a debug message to STDOUT only if debugging
@@ -12,7 +16,7 @@ const log = require('./log.js');
 module.exports = (message) => {
     if (process.env.DEBUG) {
         return new Promise(function(resolve, reject) {
-            log(message).then(() => resolve(message)).catch(error => reject(error));
+            log(`${DEBUG}${message}`).then(() => resolve(message)).catch(error => reject(error));
         });
     }
 };
