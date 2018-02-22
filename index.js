@@ -134,104 +134,116 @@ bot.on('error', console.error);
 // Called when bot receives messages
 // message => https://discord.js.org/#/docs/main/stable/class/Message
 bot.on('message', message => {
-    // Make sure the bot doesn't reply to its own messages
-    if (message.author.id == bot.user.id) {
-        return;
-    }
+	// Make sure the bot doesn't reply to its own messages
+	if (message.author.id == bot.user.id) {
+		return;
+	}
 
-    // Wrapper for sending messages, just to be concise
-    const reply = (content) => {
-        message.channel.send(content);
-    };
+	// Wrapper for sending messages, just to be concise
+	const reply = (content) => {
+		message.channel.send(content);
+	};
 
-    // Only reply to messages in #kiwipugs and #kiwiverify
-    if (message.channel.id != conf.server.pugChannel && message.channel.id != conf.server.verifyChannel) {
-        reply(strMsgNoDM);
-        return;
-    }
-    message.channel.startTyping();
+	// Filter out messages that don't start with the prefix or are from the bot itself
+	if (!message.content.startsWith(conf.prefix) || message.author.bot) return;
 
-    // Listen for messages that start with `!`
-    if (message.content.substring(0, 1) == '!') {
-        let args = message.content.substring(1).split(' ');
-        let cmd = args[0];
-        args = args.splice(1);
+	// Only reply to messages in #kiwipugs and #kiwiverify
+	if (message.channel.id != conf.server.pugChannel && message.channel.id != conf.server.verifyChannel) {
+		reply(strMsgNoDM);
+		return;
+	}
 
-        // Get user privilege level
-        let priv = checkYourPrivilege(message.author.id);
+	// let args = message.content.substring(1).split(' ');
+	// const cmd = args[0];
+	// args = args.splice(1);
 
-        user.checkLinked(message.author.id).then((isLinked) => {
-            if (isLinked) {
-                // Perform avatar association transaction
-                user.avatarAssoc(message.author.id, message.author.avatarURL);
+	const args = message.content.slice(conf.prefix.length).split(/ +/);
+	const cmd = args.shift().toLowerCase();
 
-                //Run commands
-                switch (cmd) {
-                    case 'ping':
-                        reply(strMsgPing);
-                        break;
+	// Begin fake bot typing
+	message.channel.startTyping();
 
-                    case 'h':
-                    case 'help':
-                        reply((args.length > 0) ? help(args) : strMsgHelp);
-                        break;
+	// Get user privilege level
+	const privLevel = priv(message.author.id);
+	dlog(`PrivLevel: ${privLevel}`);
 
-                    case 'a':
-                    case 'about':
-                        reply(strMsgAbout);
-                        break;
+	opUser.checkLinked(message.author.id).then((isLinked) => {
+		if (isLinked) {
+			dlog(`User linked: ${message.author.id} - yes`);
+			// Perform avatar association transaction
+			opUser.avatarAssoc(message.author.id, message.author.avatarURL);
 
-                    case 'link':
-                        reply(strMsgAlreadyLinked);
-                        break;
+			// Run commands
+			switch (cmd) {
+			case 'ping':
+				reply(strMsgPing);
+				break;
 
-                    case 'q':
-                    case 'queue':
-                        reply(enqueue(message.author.id));
-                        break;
+			case 'h':
+			case 'help':
+				reply((args.length > 0) ? help(args) : strMsgHelp);
+				break;
 
-                    case 'p':
-                    case 'party':
-                        // Party operations
-                        reply(party(args));
-                        break;
+			case 'a':
+			case 'about':
+				reply(strMsgAbout);
+				break;
 
-                    case 'pi':
-                        reply(`3.14159265359...`);
-                        break;
+			case 'link':
+				reply(strMsgAlreadyLinked);
+				break;
 
-                    case 'admin':
-                        reply(`<@119966322523242497> will be able to help with whatever questions you may have.`);
-                        break;
+			case 'q':
+			case 'queue':
+				reply(enqueue(message.author.id));
+				break;
 
-                    default:
-                        reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
-                        break;
-                }
-            } else {
-                // Check for link attempt
-                if (cmd === 'link') {
-                    user.linkAccount(message.author.username, message.author.id, args[0]).then(resp => {
-                        reply(resp);
-                    });
-                } else if (cmd === 'name') {
-                    user.setUsername(message.author.id, args[0]).then(resp => {
-                        if (resp.includes("#kiwipugs")) {
-                            setPUGRole(message.author);
-                        }
-                        reply(resp);
-                    });
-                } else {
-                    reply(strMsgNotLinked);
-                }
-            }
-        }).catch((err) => {
-            log(err);
-            reply(`Error! We're looking into it...`);
-        });
+			case 'p':
+			case 'party':
+				// Party operations
+				reply(party(args));
+				break;
 
-        message.channel.stopTyping();
-    }
+			case 'pi':
+				reply('3.14159265359...');
+				break;
+
+			case 'admin':
+				reply('<@119966322523242497> will be able to help with whatever questions you may have.');
+				break;
+
+			default:
+				reply(`\`!${cmd}\` isn't a valid command. Use !help to learn more.`);
+				break;
+			}
+		}
+		else {
+			dlog(`User linked: ${message.author.id} - no`);
+			// Check for link attempt
+			if (cmd === 'link') {
+				opUser.linkAccount(message.author.username, message.author.id, args[0]).then(resp => {
+					reply(resp);
+				});
+			}
+			else if (cmd === 'name') {
+				opUser.setUsername(message.author.id, args[0]).then(resp => {
+					if (resp.includes('#kiwipugs')) {
+						setPUGRole(message.author);
+					}
+					reply(resp);
+				});
+			}
+			else {
+				reply(strMsgNotLinked);
+			}
+		}
+	}).catch((err) => {
+		log(err);
+		reply(`${conf.server.adminMention} | Uh-oh error... we're looking into it.`);
+	});
+
+	// End the fake typing
+	message.channel.stopTyping();
 });
 
 /**
