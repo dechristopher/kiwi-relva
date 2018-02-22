@@ -13,6 +13,12 @@ const opSetUsername = require('./ops/setUsername.js');
 const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
 
 class User {
+    /**
+     *
+     * @param {Client} bot Discord bot object
+     * @param {Object} dbOptions database connection options
+     * @param {Object} cacheOptions cache connection options
+     */
     constructor(bot, dbOptions, cacheOptions) {
         this.bot = bot;
         this.dbc = new(require('./service/dbc.js'))(dbOptions);
@@ -20,6 +26,11 @@ class User {
         this.debug = process.env.DEBUG;
     }
 
+    /**
+     * Checks to see if a userID has a linked steam account and username set
+     * @param {string} userID the user's Discord ID
+     * @returns {Promise<boolean>} whether or not the user is linked
+     */
     checkLinked(userID) {
         return opCheckLinked(userID, this.dbc.conn(), this.debug);
     }
