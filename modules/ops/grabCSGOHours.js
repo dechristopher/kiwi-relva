@@ -13,15 +13,15 @@ const dlog = require('../util/dlog.js');
  * @returns {Promise<number>} -1 if acccount doesn't own CS:GO
  */
 module.exports = function(steamID) {
-    return new Promise(function(resolve, reject) {
-        // Snag some info from random API we found to get hours
-        got(`https://beta.decapi.me/steam/hours?id=${steamID}&appid=730`).then(resp => {
-            if (resp.body.split(' ').indexOf('game') > -1) {
-                resolve(-1);
-            }
-            let hours = parseInt(resp.body.split(' ')[0]);
-            dlog(`[HOURS] ${steamID} -> ${hours} hours`);
-            resolve(hours);
-        });
-    });
+	return new Promise(function(resolve) {
+		// Snag some info from random API we found to get hours
+		got(`https://beta.decapi.me/steam/hours?id=${steamID}&appid=730`).then(resp => {
+			if (resp.body.split(' ').indexOf('game') > -1) {
+				resolve(-1);
+			}
+			const hours = parseInt(resp.body.split(' ')[0]);
+			dlog(`[HOURS] ${steamID} -> ${hours} hours`);
+			resolve(hours);
+		});
+	});
 };
