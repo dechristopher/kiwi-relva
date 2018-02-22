@@ -4,8 +4,9 @@
     "description": "The KIWI Bot back in full force made for Discord.",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js",
-        "test": "mocha"
+        "start": "node .",
+        "test": "mocha",
+        "lint": "eslint ."
     },
     "repository": {
         "type": "git",
