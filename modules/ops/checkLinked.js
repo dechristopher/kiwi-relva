@@ -3,12 +3,13 @@
 // Custom Modules
 const log = require('../util/log.js');
 
-/*
-    Account link checker
-    - userID (string): the user's Discord ID
-    - dbconn (Object): reference to the database connection
-    - debug (boolean): whether or not to show debug output
-*/
+/**
+ * Account link and username set checker
+ * @param {string} userID the user's Discord ID
+ * @param {Object} dbconn reference to the database connection
+ * @param {boolean} debug debug mode
+ * @returns {Promise<boolean>} whether or not the user has a Steam account linked and username set
+ */
 module.exports = function(userID, dbconn, debug) {
     return new Promise(function(resolve, reject) {
         // Ensure user has a profile linked and has set their username
