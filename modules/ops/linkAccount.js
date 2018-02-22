@@ -8,13 +8,14 @@ const grabCSGOHours = require('./grabCSGOHours.js');
 const formatSteamURL = require('./formatSteamURL.js');
 const checkValidSteamProfileURL = require('./checkValidSteamProfileURL.js');
 
-/*
-    Account Linker
-    - userID (string): the user's Discord ID
-    - steamURL (string): the user's steam profile URL
-    - dbconn (Object): reference to the database connection
-    - debug (boolean): whether or not to show debug output
-*/
+/**
+ * Account linker
+ * @param {string} userID the Discord user ID of the user
+ * @param {string} steamURL the user's steam profile URL
+ * @param {Object} dbconn reference to the database connection
+ * @param {boolean} debug debug mode
+ * @returns {Promise<string>} response to user with result on resolve
+ */
 module.exports = function(username, userID, steamProfURL, dbconn, debug) {
     return new Promise(function(resolve, reject) {
         //console.log('hit linkAccount start');
