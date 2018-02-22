@@ -5,6 +5,7 @@
  * that will not contain any other `k`
  * @param {number} n the length of the generated id
  * @param {Object} params generation parameters
+ * @param {boolean} params.prefix whether or not to prefix the id with `k`
  */
 module.exports = function(n, params = { prefix: true }) {
     let id = params.prefix ? 'k' : '';
