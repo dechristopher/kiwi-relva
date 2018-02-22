@@ -16,7 +16,10 @@ class Queue {
         this.queue = new Collection();
     }
 
-    // Emits a single event with no payload
+    /**
+     * Emits a single event with no payload
+     * @param {string} type type of event
+     */
     emitOne(type) {
         this.emit(type);
     }
