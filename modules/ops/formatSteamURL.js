@@ -3,10 +3,11 @@
 // Custom Modules
 const log = require('../util/log.js');
 
-/*
-    SteamProfile URL formatter
-    - steamURL (string): the Steam profile URL to format
-*/
+/**
+ * SteamProfile URL formatter
+ * @param {string} steamURL the Steam profile URL to format
+ * @returns {Promise<string>} formatted Steam profile URL
+ */
 module.exports = function(steamURL) {
     const stripWWW = function(steamURL) {
         return new Promise(function(resolve, reject) {
