@@ -13,38 +13,38 @@ const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const dlog = require('./modules/util/dlog.js');
 const help = require('./modules/help.js');
-const perms = require('./modules/perms.js');
-let queue = new(require('./modules/queue.js'))();
-let user;
+const priv = require('./modules/util/checkPriv');
+// const perms = require('./modules/perms.js');
+const queue = new (require('./modules/queue.js'))();
+let opUser;
 
 // Custom Types
-let Solo = require('./modules/types/Solo.js');
-let Party = require('./modules/types/Party.js');
+const Solo = require('./modules/types/Solo.js');
+const Party = require('./modules/types/Party.js');
 
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
-const priv = JSON.parse(fs.readFileSync('./priv.json'));
 const version = require('./package').version;
 
 // Static strings
 const strBotUp = `Init KIWIBot [relva build v${version}]`;
-const strForceShutdown = `Could not close connections in time, forcefully shutting down!`;
-const strInitShutdown = `Init service shutdown`;
+const strForceShutdown = 'Could not close connections in time, forcefully shutting down!';
+const strInitShutdown = 'Init service shutdown';
 const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 
 // Message reply strings
-const strMsgPing = `Pong!`;
-const strMsgNoDM = `I don't reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.`;
-const strMsgNotLinked = `Please link your SteamID with \`!link <Steam Profile URL>\` and set your name with \`!name <username>\` before continuing to use the service.`;
-const strMsgAlreadyLinked = `Your account is already linked properly. Use \`!help\` to learn more.`;
-const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
-const strMsgAbout = `I'm KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use \`!help\` to learn what I can do.`;
+const strMsgPing = 'Pong!';
+const strMsgNoDM = 'I don\'t reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.';
+const strMsgNotLinked = 'Please link your SteamID with `!link <Steam Profile URL>` and set your name with `!name <username>` before continuing to use the service.';
+const strMsgAlreadyLinked = 'Your account is already linked properly. Use `!help` to learn more.';
+const strMsgHelp = 'Available commands: `!ping`, `!(q)ueue`, `!(p)arty`, `!(a)bout`, `!(h)elp` - for command details type `!help <command>`';
+const strMsgAbout = 'I\'m KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use `!help` to learn what I can do.';
 
 /**
  * Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
  * @type {Client}
  */
-let bot = new Discord.Client();
+const bot = new Discord.Client();
 
 /**
  * he discord server the bot is a part of
@@ -56,12 +56,12 @@ let guild;
  * Party Channel Collection
  * @type {Collection<string, GuildChannel>}
  */
-let partyChannels = new Collection();
+const partyChannels = new Collection();
 /**
  * MatchRoom Channel Collection
  * @type {Collection<string, GuildChannel>}
  */
-let matchRoomChannels = new Collection();
+const matchRoomChannels = new Collection();
 
 /**
  * Base party channel to clone new party channels from
@@ -75,53 +75,61 @@ let basePartyChannel;
 let baseMatchRoomChannel;
 
 // Debug mode enabled
-if (process.argv.indexOf("debug") > -1) {
-    process.env.DEBUG = true;
-    dlog(`DEBUGGING ENABLED`);
-} else {
-    process.env.DEBUG = false;
+if (process.argv.indexOf('debug') > -1) {
+	process.env.DEBUG = true;
+	dlog('DEBUGGING ENABLED');
 }
-let debug = process.env.DEBUG;
+else {
+	process.env.DEBUG = false;
+}
 
 // Called when bot is connected
 bot.on('ready', function() {
-    log(`Login: ${bot.user.username} => (${bot.user.id})`);
-    // Instantiate the user module and service factories
-    user = new(require('./modules/user.js'))(bot, conf.db, conf.cache);
-    // Set the guild reference
-    guild = bot.guilds.first();
-    // Set the base party channel template
-    basePartyChannel = guild.channels.get(conf.server.partyBaseID);
-    // Set the base matchRoom channel template
-    baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
-    //Testing
-    let party1 = new Party(guild.members.first());
-    //console.log(party1.size() + ' ' + party1.type + ' ' + party1.id);
-    //console.log(guild.roles);
-    //console.log(party1.joinCode + ' ' + party1.newJoinCode() + ' ' + party1.joinCode);
-    createPartyChannel(party1.id).then(channel => {
-        channel.send("it works!", { reply: guild });
-        deleteChannel(channel, 'party').then((channel) => {
-            dlog('It works here too!');
-        });
-    });
-    queue.emit('queueInit', guild.id);
+	log(`Login: ${bot.user.username} => (${bot.user.id})`);
+	// Instantiate the user module and service factories
+	opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
+	// Set the guild reference
+	guild = bot.guilds.first();
+	// Set the base party channel template
+	basePartyChannel = guild.channels.get(conf.server.partyBaseID);
+	// Set the base matchRoom channel template
+	baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
+	// Testing
+	const party1 = new Party(guild.members.first());
+	dlog(party1.id);
+	// console.log(party1.size() + ' ' + party1.type + ' ' + party1.id);
+	// console.log(guild.roles);
+	// console.log(party1.joinCode + ' ' + party1.newJoinCode() + ' ' + party1.joinCode);
+	/* createPartyChannel(party1.id).then(channel => {
+		channel.send('it works!', {
+			reply: guild,
+		});
+		deleteChannel(channel, 'party').then((delChannel) => {
+			dlog(`It works here too! ${delChannel.name}`);
+		});
+	}); */
+
+	// const partyChannel = await createPartyChannel(party1.id);
+	// await deleteChannel(partyChannel);
+
+
+	queue.emit('queueInit', guild.id);
 });
 
 // Hit when queue is initialized
 queue.on('queueInit', function(guildID) {
-    log(`Queue Initialized: ${guildID}`);
+	log(`Queue Initialized: ${guildID}`);
 });
 
 // Hit when entity joins the queue
 queue.on('queueJoin', function(entity) {
-
+	dlog(entity);
 });
 
 bot.on('warn', console.warn);
 bot.on('error', console.error);
-//bot.on('disconnect', log('DISCONNECTED'));
-//bot.on('reconnecting', log('RECONNECTING'));
+// bot.on('disconnect', log('DISCONNECTED'));
+// bot.on('reconnecting', log('RECONNECTING'));
 
 // Called when bot receives messages
 // message => https://discord.js.org/#/docs/main/stable/class/Message
@@ -227,29 +235,16 @@ bot.on('message', message => {
 });
 
 /**
- * Checks for and returns a user's privilege level
- * @param {string} [id] the userID to check
- */
-function checkYourPrivilege(id) {
-    for (let i = 0; i < priv.users.length; i++) {
-        if (priv.users[i].userID == userID) {
-            return users[i].level;
-        }
-    }
-    return 0;
-}
-
-/**
  * Gives the provided user the PUG Player role
  * @param {GuildMember} [user] the user to give the role to
  */
 function setPUGRole(user) {
-    setTimeout(function() {
-        dlog(`Set PUG User -> ${user.username} (${user.id})`);
-        guild.fetchMember(user).then(member => {
-            member.addRole(conf.server.pugRole);
-        });
-    }, 5000);
+	setTimeout(function() {
+		dlog(`Set PUG User -> ${user.username} (${user.id})`);
+		guild.fetchMember(user).then(member => {
+			member.addRole(conf.server.pugRole);
+		});
+	}, 5000);
 }
 
 /**
@@ -258,16 +253,19 @@ function setPUGRole(user) {
  * @returns {string} status message for user information
  */
 function enqueue(entity) {
-    //TODO: Add to queue
-    //queue.emit('queueJoin', entity);
-    // Return response
-    return `You cannot be queued up since the PUG queue isn't online yet!`;
+	// TODO: Add to queue
+	dlog(entity.id);
+	// queue.emit('queueJoin', entity);
+	parseQueue();
+	// Return response
+	return 'You cannot be queued up since the PUG queue isn\'t online yet!';
 }
 
 // Determines viability of fair game with
 // active queued players and parties
 function parseQueue() {
-    // TODO
+	// TODO
+	provisionMatch('us-e', ['drop']);
 }
 
 /**
@@ -277,7 +275,8 @@ function parseQueue() {
  * @returns {string} command response text
  */
 function party(user, args) {
-    return `Parties arent available yet, sorry pal.`;
+	dlog(`P: ${user} -> ${args}`);
+	return 'Parties aren\'t available yet, sorry pal.';
 }
 
 /**
@@ -286,8 +285,10 @@ function party(user, args) {
  * @param {Collection<string, User>} players a list of players in the match
  */
 function provisionMatch(region, players) {
-    // TODO
-    return;
+	// TODO
+	dlog(`${region} ${players}`);
+	provisionClients('', players);
+	return;
 }
 
 /**
@@ -297,16 +298,16 @@ function provisionMatch(region, players) {
  * @throws {Promise<string>} error message on rejection
  */
 function createMatchRoom(id) {
-    return new Promise(function(resolve, reject) {
-        baseMatchRoomChannel.clone(`match-pug-${id}`, true, true).then((channel) => {
-            channel.setParent(conf.server.matchRoomCategory);
-            matchRoomChannels.set(id, channel);
-            dlog(`Created matchroom: ${channel.name}`);
-            resolve(channel);
-        }).catch(() => {
-            reject(`FAIL [createMatchRoom: party-${id}]`);
-        });
-    });
+	return new Promise(function(resolve, reject) {
+		baseMatchRoomChannel.clone(`match-pug-${id}`, true, true).then((channel) => {
+			channel.setParent(conf.server.matchRoomCategory);
+			matchRoomChannels.set(id, channel);
+			dlog(`Created matchroom: ${channel.name}`);
+			resolve(channel);
+		}).catch(() => {
+			reject(`FAIL [createMatchRoom: party-${id}]`);
+		});
+	});
 }
 
 /**
@@ -316,16 +317,16 @@ function createMatchRoom(id) {
  * @throws {Promise<string>} error message on rejection
  */
 function createPartyChannel(id) {
-    return new Promise(function(resolve, reject) {
-        basePartyChannel.clone(`party-${id}`, true, true).then((channel) => {
-            channel.setParent(conf.server.partyCategory);
-            partyChannels.set(id, channel);
-            dlog(`Created party channel: ${channel.name}`);
-            resolve(channel);
-        }).catch(() => {
-            reject(`FAIL [createPartyChannel: party-${id}]`);
-        });
-    });
+	return new Promise(function(resolve, reject) {
+		basePartyChannel.clone(`party-${id}`, true, true).then((channel) => {
+			channel.setParent(conf.server.partyCategory);
+			partyChannels.set(id, channel);
+			dlog(`Created party channel: ${channel.name}`);
+			resolve(channel);
+		}).catch(() => {
+			reject(`FAIL [createPartyChannel: party-${id}]`);
+		});
+	});
 }
 
 /**
@@ -336,24 +337,26 @@ function createPartyChannel(id) {
  * @throws {Promise<string>} error message on rejection
  */
 function deleteChannel(channel, type = 'party') {
-    return new Promise(function(resolve, reject) {
-        channel.delete(`Closing channel/matchroom: ${channel.name}`).then((channel) => {
-            if (type === 'party') {
-                let key = partyChannels.findKey('id', channel.id);
-                partyChannels.delete(key);
-                dlog(`Deleted party channel: ${channel.name}`);
-            } else if (type === 'match') {
-                let key = matchRoomChannels.findKey('id', channel.id);
-                matchRoomChannels.delete(key);
-                dlog(`Deleted match room channel: ${channel.name}`);
-            } else {
-                reject(`FAIL [deleteChannel: invalid channel type -> ${type}`);
-            }
-            resolve(channel);
-        }).catch(() => {
-            reject(`FAIL [deleteChannel: ${channel.name}`);
-        });
-    });
+	return new Promise(function(resolve, reject) {
+		channel.delete(`Closing channel/matchroom: ${channel.name}`).then((delChannel) => {
+			if (type === 'party') {
+				const key = partyChannels.findKey('id', delChannel.id);
+				partyChannels.delete(key);
+				dlog(`Deleted party channel: ${delChannel.name}`);
+			}
+			else if (type === 'match') {
+				const key = matchRoomChannels.findKey('id', delChannel.id);
+				matchRoomChannels.delete(key);
+				dlog(`Deleted match room channel: ${delChannel.name}`);
+			}
+			else {
+				reject(`FAIL [deleteChannel: invalid channel type -> ${type}`);
+			}
+			resolve(delChannel);
+		}).catch(() => {
+			reject(`FAIL [deleteChannel: ${channel.name}`);
+		});
+	});
 }
 
 /**
@@ -362,8 +365,9 @@ function deleteChannel(channel, type = 'party') {
  * @param {Collection<string, GuildMember} players the match players
  */
 function provisionClients(channel, players) {
-    // TODO
-    return;
+	// TODO
+	dlog(`${channel} ${players}`);
+	return;
 }
 
 /**
@@ -371,41 +375,51 @@ function provisionClients(channel, players) {
  * @returns nothing
  */
 function terminate() {
-    // Hard quit if service cannot gracefully shutdown after 10 seconds
-    setTimeout(function() {
-        log(strForceShutdown, { newLinePre: true }).then(() => {
-            log(strLogSeparator, { stdOut: false, usePrefix: false }).then(() => {
-                // Terminate with exit code 1
-                process.exit(1);
-            });
-        });
-    }, 10 * 1000);
-    // Attempt a graceful shutdown on SIGTERM
-    bot.destroy().then(() => {
-        log(strInitShutdown, { newLinePre: true }).then(() => {
-            log(strLogSeparator, { stdOut: false, usePrefix: false }).then(() => {
-                // Close db, rcon connections, and etc...
-                user.dbc.conn().destroy();
-                user.cache.conn().end();
-                // Terminate with exit code 0
-                process.exit(0);
-            });
-        });
-    });
+	// Hard quit if service cannot gracefully shutdown after 10 seconds
+	setTimeout(function() {
+		log(strForceShutdown, {
+			newLinePre: true,
+		}).then(() => {
+			log(strLogSeparator, {
+				stdOut: false,
+				usePrefix: false,
+			}).then(() => {
+				// Terminate with exit code 1
+				process.exit(1);
+			});
+		});
+	}, 10 * 1000);
+	// Attempt a graceful shutdown on SIGTERM
+	bot.destroy().then(() => {
+		log(strInitShutdown, {
+			newLinePre: true,
+		}).then(() => {
+			log(strLogSeparator, {
+				stdOut: false,
+				usePrefix: false,
+			}).then(() => {
+				// Close db, rcon connections, and etc...
+				opUser.dbc.conn().destroy();
+				opUser.cache.conn().end();
+				// Terminate with exit code 0
+				process.exit(0);
+			});
+		});
+	});
 }
 
 // Catch the termination signal and operate on it
 process.on('SIGTERM', function() {
-    terminate();
+	terminate();
 });
 
 // Catch the interrupt signal and operate on it
 process.on('SIGINT', function() {
-    terminate();
+	terminate();
 });
 
 // Authenticate using the bot token
 bot.login(conf.token);
 
-ascii(); // Startup messages
-log(strBotUp);
+// Startup messages
+ascii().then(console.log).then(log(strBotUp));
