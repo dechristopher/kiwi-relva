@@ -14,9 +14,9 @@ const DEBUG = `[${c.cyan('debug')}] `;
  * @returns {Promise<error>} on log rejection
  */
 module.exports = (message) => {
-    if (process.env.DEBUG) {
-        return new Promise(function(resolve, reject) {
-            log(`${DEBUG}${message}`).then(() => resolve(message)).catch(error => reject(error));
-        });
-    }
+	if (process.env.DEBUG) {
+		return new Promise(function(resolve, reject) {
+			log(`${DEBUG}${message}`).then(() => resolve(message)).catch(error => reject(error));
+		});
+	}
 };
