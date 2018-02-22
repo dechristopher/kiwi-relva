@@ -3,8 +3,11 @@
 // NPM modules
 const chalk = require('chalk');
 
-// Pretty-print 'raagi' in green ascii art
-// http://patorjk.com/software/taag/#p=display&f=Straight&t=relva
+/**
+ * Pretty-print 'raagi' in green ascii art
+ * http://patorjk.com/software/taag/#p=display&f=Straight&t=relva
+ * @returns {string} ascii art
+ */
 module.exports = function() {
     let time = new Date();
     let year = time.getFullYear();
