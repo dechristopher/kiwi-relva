@@ -7,6 +7,17 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.6.0 ==
++ Added ESLint to project and defined rules and ignoring
+~ Refactored almost every file in the project to adhere to ESLint rules
++ Redefined NPM run scripts to include test and lint
++ Began revamping command handling (fixed arg parsing bug)
++ Addec checkValidSteamProfileURL() tests to non-stateful testing
++ Created getUserName.js data operation module
++ Modulalrized checkYourPrivilege() into checkPriv.js
++ Promisified and cleaned up ascii.js
+
+
 == 1.5.2 ==
 + Implemented debug logging module modules/util/dlog.js
 ~ Improved cache ready message
