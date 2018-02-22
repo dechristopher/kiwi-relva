@@ -2,6 +2,7 @@
 
 // Custom Modules
 const log = require('./util/log.js');
+const dlog = require('./util/dlog.js');
 
 // Operation Modules
 const opAvatarAssoc = require('./ops/avatarAssoc.js');
@@ -11,103 +12,79 @@ const opSetUsername = require('./ops/setUsername.js');
 
 // Data Operation Modules
 const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
+const opGetUserName = require('./ops/data/getUserName.js');
 
 class User {
-    /**
+	/**
      *
      * @param {Client} bot Discord bot object
      * @param {Object} dbOptions database connection options
      * @param {Object} cacheOptions cache connection options
      */
-    constructor(bot, dbOptions, cacheOptions) {
-        this.bot = bot;
-        this.dbc = new(require('./service/dbc.js'))(dbOptions);
-        this.cache = new(require('./service/cache.js'))(cacheOptions);
-        this.debug = process.env.DEBUG;
-    }
+	constructor(bot, dbOptions, cacheOptions) {
+		this.bot = bot;
+		this.dbc = new (require('./service/dbc.js'))(dbOptions);
+		this.cache = new (require('./service/cache.js'))(cacheOptions);
+		this.debug = process.env.DEBUG;
+	}
 
-    /**
+	/**
      * Checks to see if a userID has a linked steam account and username set
      * @param {string} userID the user's Discord ID
      * @returns {Promise<boolean>} whether or not the user is linked
      */
-    checkLinked(userID) {
-        return opCheckLinked(userID, this.dbc.conn(), this.debug);
-    }
+	checkLinked(userID) {
+		return opCheckLinked(userID, this.dbc.conn());
+	}
 
-    linkAccount(username, userID, steamURL) {
-        let dbconn = this.dbc.conn();
-        let debug = this.debug;
-        return new Promise(function(resolve, reject) {
-            opLinkAccount(username, userID, steamURL, dbconn, debug).then(resp => {
-                //console.log('hit opLinkAccount then()');
-                //console.log(resp);
-                resolve(resp);
-                return;
-            }).catch(err => {
-                resolve(`An unforseen error has occurred, please contact \`<@119966322523242497>\` immediately and try again later. \`[CODE: K75]\``);
-                return;
-            });
-        });
-    }
+	linkAccount(username, userID, steamURL) {
+		const dbconn = this.dbc.conn();
+		return new Promise(function(resolve) {
+			opLinkAccount(username, userID, steamURL, dbconn).then(resp => {
+				dlog('hit opLinkAccount then()');
+				// console.log(resp);
+				resolve(resp);
+				return;
+			}).catch(err => {
+				log(err);
+				resolve('An unforseen error has occurred, please contact `<@119966322523242497>` immediately and try again later. `[CODE: K75]`');
+				return;
+			});
+		});
+	}
 
-    setUsername(userID, username) {
-        let dbconn = this.dbc.conn();
-        let debug = this.debug;
-        let bot = this.bot;
-        return new Promise(function(resolve, reject) {
-            opSetUsername(userID, username, dbconn, debug).then(resp => {
-                //console.log('hit opSetUsername then()');
-                //console.log(resp);
-                resolve(resp);
-                return;
-            }).catch(err => {
-                resolve(`An unforseen error has occurred, please contact \`<@119966322523242497>\` immediately and try again later. \`[CODE: K83]\``);
-                return;
-            });
-        });
-    }
+	setUsername(userID, username) {
+		const dbconn = this.dbc.conn();
+		return new Promise(function(resolve) {
+			opSetUsername(userID, username, dbconn).then(resp => {
+				dlog('hit opSetUsername then()');
+				// console.log(resp);
+				resolve(resp);
+				return;
+			}).catch(err => {
+				log(err);
+				resolve('An unforseen error has occurred, please contact `<@119966322523242497>` immediately and try again later. `[CODE: K83]`');
+				return;
+			});
+		});
+	}
 
-    avatarAssoc(userID, avatarURL) {
-        opAvatarAssoc(userID, avatarURL, this.dbc.conn(), this.cache.conn(), this.debug);
-    }
+	avatarAssoc(userID, avatarURL) {
+		dlog('hit opAvatarAssoc()');
+		opAvatarAssoc(userID, avatarURL, this.dbc.conn(), this.cache.conn());
+	}
 
-    getUserSteamID(userID) {
-        this.dbc.conn().query('SELECT steam_id FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-            return results[0].steam_id;
-        });
-    }
+	getUserSteamID(userID) {
+		opGetUserSteamID(userID, this.dbc.conn()).then(sid => {
+			return sid;
+		});
+	}
 
-    getUserSteamID64(userID) {
-        this.dbc.conn().query('SELECT steam_id_64 FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-            return results[0].steam_id_64;
-        });
-    }
-
-    getUserSteamID3(userID) {
-        this.dbc.conn().query('SELECT steam_id_3 FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-            return results[0].steam_id_3;
-        });
-    }
-
-    getUserName(userID) {
-        opGetUserSteamID(userID, this.dbc.conn(), this.debug).then(sid => {
-            return sid;
-        });
-    }
-
-    getUserSteamProfile(userID) {
-        this.dbc.conn().query('SELECT steam_profile_url FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-            return results[0].steam_profile_url;
-        });
-    }
-
-    getUserDiscordAvatar(userID) {
-        this.dbc.conn().query('SELECT discord_avatar_url FROM `users` WHERE `discord_id` = ?', [userID], function(error, results, fields) {
-            return results[0].discord_avatar_url;
-        });
-    }
-
+	getUserName(userID) {
+		opGetUserName(userID, this.dbc.conn()).then(username => {
+			return username;
+		});
+	}
 }
 
 module.exports = User;
