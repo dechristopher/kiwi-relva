@@ -40,21 +40,38 @@ const strMsgAlreadyLinked = `Your account is already linked properly. Use \`!hel
 const strMsgHelp = `Available commands: \`!ping\`, \`!(q)ueue\`, \`!(p)arty\`, \`!(a)bout\`, \`!(h)elp\` - for command details type \`!help <command>\``;
 const strMsgAbout = `I'm KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use \`!help\` to learn what I can do.`;
 
-// Initialize bot
-// Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
+/**
+ * Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
+ * @type {Client}
+ */
 let bot = new Discord.Client();
 
-// The discord server the bot is a part of { Guild }
+/**
+ * he discord server the bot is a part of
+ * @type {Guild}
+ */
 let guild;
 
-// Party Channel storage { Collection<string, GuildChannel> }
+/**
+ * Party Channel Collection
+ * @type {Collection<string, GuildChannel>}
+ */
 let partyChannels = new Collection();
-// MatchRoom Channel storage { Collection<string, GuildChannel> }
+/**
+ * MatchRoom Channel Collection
+ * @type {Collection<string, GuildChannel>}
+ */
 let matchRoomChannels = new Collection();
 
-// Base party channel to clone new party channels from { GuildChannel }
+/**
+ * Base party channel to clone new party channels from
+ * @type {GuildChannel}
+ */
 let basePartyChannel;
-// Base matchRoom channel to clone new matchRoom channels from { GuildChannel }
+/**
+ * Base matchroom channel to clone new party channels from
+ * @type {GuildChannel}
+ */
 let baseMatchRoomChannel;
 
 // Debug mode enabled
@@ -213,7 +230,6 @@ bot.on('message', message => {
  * Checks for and returns a user's privilege level
  * @param {string} [id] the userID to check
  */
-
 function checkYourPrivilege(id) {
     for (let i = 0; i < priv.users.length; i++) {
         if (priv.users[i].userID == userID) {
@@ -271,6 +287,7 @@ function party(user, args) {
  */
 function provisionMatch(region, players) {
     // TODO
+    return;
 }
 
 /**
@@ -339,10 +356,14 @@ function deleteChannel(channel, type = 'party') {
     });
 }
 
-// Sends DMs to players selected for a new match
-// Also adds them to the created match room
-function provisionClients(channel, players = ['drop', 'sparks']) {
-
+/**
+ * Sends DMs to match players and adds them to the created match room
+ * @param {GuildChannel} channel the matchroom channel
+ * @param {Collection<string, GuildMember} players the match players
+ */
+function provisionClients(channel, players) {
+    // TODO
+    return;
 }
 
 /**
