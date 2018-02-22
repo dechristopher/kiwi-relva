@@ -8,12 +8,13 @@ const log = require('../util/log.js');
 
 class DatabaseConnection {
     /**
-     * options:
-     *  - host (string: db host address)
-     *  - port (int: db host listen port)
-     *  - user (string: db auth username)
-     *  - password (string: db auth password)
-     *  - database (string: database to use within db)
+     * Builds a databse connection
+     * @param {Object} options connection options
+     * @param {string} options.host db host to connect to
+     * @param {int} options.port db port to connect to
+     * @param {string} options.user db auth username
+     * @param {string} options.password db auth password
+     * @param {string} options.database database to use
      */
     constructor(options) {
         this.connection = mysql.createConnection(options);
