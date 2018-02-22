@@ -6,16 +6,15 @@ const chalk = require('chalk');
 /**
  * Pretty-print 'raagi' in green ascii art
  * http://patorjk.com/software/taag/#p=display&f=Straight&t=relva
- * @returns {string} ascii art
+ * @returns {Promise<string>} ascii art
  */
 module.exports = function() {
-    let time = new Date();
-    let year = time.getFullYear();
-    console.log(
-        chalk.green(`\n _  _ |     _  \n` +
-            `|  (- | \\/ (_| \n`) +
-        chalk.white(` © kiwi ` + year + `\n`)
-    );
+	return new Promise(function(resolve) {
+		const time = new Date();
+		const year = time.getFullYear();
+		const ascii = chalk.green('\n _  _ |     _  \n' + '|  (- | \\/ (_| \n') + chalk.white(' © kiwi ' + year + '\n');
+		resolve(ascii);
+	});
 };
 
 /*
