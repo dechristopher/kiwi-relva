@@ -8,11 +8,12 @@ const log = require('../util/log.js');
 
 class RedisConnection {
     /**
-     * options:
-     *  - host (string: redis host address)
-     *  - port (int: redis host listen port)
-     *  - password (string: redis auth password)
-     *  - db (string: database to use within redis)
+     * Builds a Redis cache connection
+     * @param {Object} options connection options
+     * @param {string} options.host db host to connect to
+     * @param {int} options.port db port to connect to
+     * @param {string} options.password db auth password
+     * @param {string} options.db database to use
      */
     constructor(options) {
         this.connection = redis.createClient(options);
