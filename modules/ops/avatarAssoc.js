@@ -3,15 +3,15 @@
 // Custom Modules
 const dlog = require('../util/log.js');
 
-/*
-    Avatar Association Algorithm: doc/avatar-association-algorithm.txt
-    - Non-promisified, happens regardles of command runner event loop
-    - userID (string): the user's Discord ID
-    - avatarURL (string): link to the user's Discord avatar
-    - dbconn (Object): reference to the database connection
-    - cconn (Object): reference to the cache connection
-    - debug (boolean): whether or not to show debug output
-*/
+/**
+ * Avatar Association Algorithm: doc/avatar-association-algorithm.txt
+ * Non-promisified and no return. Happens in the background regardless of result
+ * @param {string} userID the user's Discord ID
+ * @param {string} avatarURL link to the user's Discord avatar
+ * @param {Object} dbconn reference to the database connection
+ * @param {Object} cconn reference to the cache connection
+ * @param {boolean} debug debug mode
+ */
 module.exports = function(userID, avatarURL, dbconn, cconn, debug) {
     // Check to see if the cache contains an entry for the user's avatar
     cconn.hexists('avatars', userID, function(err, reply) {
