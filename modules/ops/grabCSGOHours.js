@@ -6,13 +6,12 @@ const got = require('got');
 // Custom Modules
 const dlog = require('../util/dlog.js');
 
-/*
-    CS:GO Hours Grabber
-    - steamID (string): the Steam ID of the user in question
-
-    Returns: (number): hours(rounded)
-    Returns: -1 if account doesn't own CS:GO
-*/
+/**
+ * CS:GO Hours Grabber
+ * @param {string} steamID the Steam ID of the user in question
+ * @returns {Promise<number>} hours in CS:GO (rounded)
+ * @returns {Promise<number>} -1 if acccount doesn't own CS:GO
+ */
 module.exports = function(steamID) {
     return new Promise(function(resolve, reject) {
         // Snag some info from random API we found to get hours
