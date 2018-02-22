@@ -8,11 +8,11 @@
  * @param {boolean} params.prefix whether or not to prefix the id with `k`
  */
 module.exports = function(n, params = { prefix: true }) {
-    let id = params.prefix ? 'k' : '';
-    let length = params.prefix ? n : n + 1;
-    let dict = "abcdefghijlmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < (length - 1); i++) {
-        id += dict.charAt(Math.floor(Math.random() * dict.length));
-    }
-    return id;
+	let id = params.prefix ? 'k' : '';
+	const length = params.prefix ? n : n + 1;
+	const dict = 'abcdefghijlmnopqrstuvwxyz0123456789';
+	for (let i = 0; i < (length - 1); i++) {
+		id += dict.charAt(Math.floor(Math.random() * dict.length));
+	}
+	return id;
 };
