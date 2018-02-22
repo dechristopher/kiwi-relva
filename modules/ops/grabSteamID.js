@@ -9,20 +9,17 @@ const steam = require('steamidconvert')();
 const log = require('../util/log.js');
 const dlog = require('../util/dlog.js');
 
-/*
-    Steam URL to SteamID parser
-    - steamURL (string): the Steam Profile URL to get the Steam IDs of
-
-    Returns: Object: nugget
-    {
-        error: (string [if any]): an error encountered
-        ids: {
-            steamid: STEAM_0:0:39990
-            steamid64: 76561197960345708
-            steamid3: [U:1:79980]
-        }
-    }
-*/
+/**
+ * Steam URL to SteamIDs parser
+ * @param {string} steamURL the user's steam profile URL
+ * @returns {Promise<Object>} nugget
+ *  nugget.error (if any)
+ *  nugget.ids {
+ *      steamid: 'STEAM_0:0:39990',
+ *      steamid64: '76561197960345708',
+ *      steamid3: '[U:1:79980]'
+ *  }
+ */
 module.exports = function(steamURL) {
     return new Promise(function(resolve, reject) {
         let nugget = {};
