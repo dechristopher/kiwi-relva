@@ -6,10 +6,11 @@ const regex = require('regex');
 // Custom Modules
 const dlog = require('../util/dlog.js');
 
-/*
-    SteamProfile URL formatter
-    - steamURL (string): the Steam profile URL to check
-*/
+/**
+ * SteamProfile URL checker
+ * @param {string} steamURL the Steam profile URL to check
+ * @returns {Promise<boolean>} whether or not the Steam profuile URL is valid
+ */
 module.exports = function(steamURL) {
     // Steam Profile URL Regex
     let steamURLReg = new RegExp(`(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9]+`);
