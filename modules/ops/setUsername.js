@@ -5,13 +5,14 @@ const log = require('../util/log.js');
 const checkLinkedNoUsername = require('./checkLinkedNoUsername.js');
 const checkUsernameValid = require('./checkUsernameValid.js');
 
-/*
-    Username Setter
-    - userID (string): the Discord user ID of the user
-    - username (string): the user's desired KIWI username
-    - dbconn (Object): reference to the database connection
-    - debug (boolean): whether or not to show debug output
-*/
+/**
+ * Username setter
+ * @param {string} userID the Discord user ID of the user
+ * @param {string} username the user's desired KIWI username
+ * @param {Object} dbconn reference to the database connection
+ * @param {boolean} debug debug mode
+ * @returns {Promise<string>} response to user with result on resolve
+ */
 module.exports = function(userID, username, dbconn, debug) {
     return new Promise(function(resolve, reject) {
         // Ensure user has linked steam profile to discord user FIRST
