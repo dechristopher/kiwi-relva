@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/formatSteamURL.js - Created February 14th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
+const dlog = require('../util/log.js');
 
 /**
  * SteamProfile URL formatter
@@ -9,53 +9,53 @@ const log = require('../util/log.js');
  * @returns {Promise<string>} formatted Steam profile URL
  */
 module.exports = function(steamURL) {
-    const stripWWW = function(steamURL) {
-        return new Promise(function(resolve, reject) {
-            // Strip www. from URL (because it breaks everything)
-            if (steamURL.includes('www.')) {
-                //console.log('has www.');
-                steamURL = steamURL.replace('www.', '');
-                resolve(steamURL);
-                return;
-            }
-            resolve(steamURL);
-        });
-    };
+	const stripWWW = function(steamURLWWW) {
+		return new Promise(function(resolve) {
+			// Strip www. from URL (because it breaks everything)
+			if (steamURLWWW.includes('www.')) {
+				dlog('[SProf] has www.');
+				steamURLWWW = steamURLWWW.replace('www.', '');
+				resolve(steamURLWWW);
+				return;
+			}
+			resolve(steamURLWWW);
+		});
+	};
 
-    const replaceHTTP = function(steamURL) {
-        return new Promise(function(resolve, reject) {
-            // Add https:// if URL doesn't contain it
-            if (steamURL.includes('http://')) {
-                //console.log('has replace http with https');
-                steamURL = steamURL.replace('http://', 'https://');
-                resolve(steamURL);
-                return;
-            }
-            resolve(steamURL);
-        });
-    }
+	const replaceHTTP = function(steamURLHTTP) {
+		return new Promise(function(resolve) {
+			// Add https:// if URL doesn't contain it
+			if (steamURLHTTP.includes('http://')) {
+				dlog('[SProf] has replace http with https');
+				steamURLHTTP = steamURLHTTP.replace('http://', 'https://');
+				resolve(steamURLHTTP);
+				return;
+			}
+			resolve(steamURLHTTP);
+		});
+	};
 
-    const addHTTPS = function(steamURL) {
-        return new Promise(function(resolve, reject) {
-            // Add https:// if URL doesn't contain it
-            if (!steamURL.includes('https://') && !steamURL.includes('http://')) {
-                //console.log('has www.');
-                steamURL = 'https://' + steamURL;
-                resolve(steamURL);
-                return;
-            }
-            resolve(steamURL);
-        });
-    };
+	const addHTTPS = function(steamURLHTTPS) {
+		return new Promise(function(resolve) {
+			// Add https:// if URL doesn't contain it
+			if (!steamURLHTTPS.includes('https://') && !steamURLHTTPS.includes('http://')) {
+				// console.log('has www.');
+				steamURLHTTPS = 'https://' + steamURLHTTPS;
+				resolve(steamURLHTTPS);
+				return;
+			}
+			resolve(steamURLHTTPS);
+		});
+	};
 
-    // Run formatting
-    return new Promise(function(resolve, reject) {
-        stripWWW(steamURL).then(url => {
-            replaceHTTP(url).then(url => {
-                addHTTPS(url).then(url => {
-                    resolve(url);
-                });
-            });
-        });
-    });
+	// Run formatting
+	return new Promise(function(resolve) {
+		stripWWW(steamURL).then(urlwww => {
+			replaceHTTP(urlwww).then(urlhttp => {
+				addHTTPS(urlhttp).then(urlhttps => {
+					resolve(urlhttps);
+				});
+			});
+		});
+	});
 };
