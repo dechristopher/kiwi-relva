@@ -194,6 +194,46 @@ bot.on('message', message => {
 	dlog(`PrivLevel: ${privLevel}`);
 
 	opUser.checkLinked(message.author.id).then((isLinked) => {
+		// TESTING
+		/* if (!bot.commands.has(commandName)) return;
+
+		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+		if (!command) return;
+
+		if (!cooldowns.has(command.name)) {
+			cooldowns.set(command.name, new Discord.Collection());
+		}
+
+		const now = Date.now();
+		const timestamps = cooldowns.get(command.name);
+		const cooldownAmount = (command.cooldown || 3) * 1000;
+
+		if (!timestamps.has(message.author.id)) {
+			timestamps.set(message.author.id, now);
+    		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+		}
+		else {
+			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+			if (now < expirationTime) {
+				const timeLeft = (expirationTime - now) / 1000;
+				return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			}
+
+			timestamps.set(message.author.id, now);
+			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+		}
+
+		try {
+			command.execute(message, args);
+		}
+		catch (error) {
+			log(error);
+			message.reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further!`);
+		} */
+		// TESTING
+
 		if (isLinked) {
 			dlog(`User linked: ${message.author.id} - yes`);
 			// Perform avatar association transaction
