@@ -52,6 +52,13 @@ bot.commands = new Discord.Collection();
  */
 bot.commandsLink = new Discord.Collection();
 
+/**
+ * Command cooldowns collection
+ * @type {Collection<string, >}
+ */
+const cooldowns = new Discord.Collection();
+
+/**
  * he discord server the bot is a part of
  * @type {Guild}
  */
