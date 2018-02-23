@@ -106,25 +106,7 @@ bot.on('ready', function() {
 	basePartyChannel = guild.channels.get(conf.server.partyBaseID);
 	// Set the base matchRoom channel template
 	baseMatchRoomChannel = guild.channels.get(conf.server.matchRoomBaseID);
-	// Testing
-	const party1 = new Party(guild.members.first());
-	dlog(party1.id);
-	// console.log(party1.size() + ' ' + party1.type + ' ' + party1.id);
-	// console.log(guild.roles);
-	// console.log(party1.joinCode + ' ' + party1.newJoinCode() + ' ' + party1.joinCode);
-	/* createPartyChannel(party1.id).then(channel => {
-		channel.send('it works!', {
-			reply: guild,
-		});
-		deleteChannel(channel, 'party').then((delChannel) => {
-			dlog(`It works here too! ${delChannel.name}`);
-		});
-	}); */
-
-	// const partyChannel = await createPartyChannel(party1.id);
-	// await deleteChannel(partyChannel);
-
-
+	// Initialize the queue
 	queue.emit('queueInit', guild.id);
 });
 
