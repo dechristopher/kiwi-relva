@@ -31,12 +31,8 @@ const strInitShutdown = 'Init service shutdown';
 const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 
 // Message reply strings
-const strMsgPing = 'Pong!';
 const strMsgNoDM = 'I don\'t reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.';
 const strMsgNotLinked = 'Please link your SteamID with `!link <Steam Profile URL>` and set your name with `!name <username>` before continuing to use the service.';
-const strMsgAlreadyLinked = 'Your account is already linked properly. Use `!help` to learn more.';
-const strMsgHelp = 'Available commands: `!ping`, `!(q)ueue`, `!(p)arty`, `!(a)bout`, `!(h)elp` - for command details type `!help <command>`';
-const strMsgAbout = 'I\'m KIWI Bot! Use me like your sick puppet and bend me to your will to use the KIWI PUG service. Use `!help` to learn what I can do.';
 
 /**
  * Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
