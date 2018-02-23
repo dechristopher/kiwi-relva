@@ -37,7 +37,7 @@ module.exports = function(message, options = { logName: '', stdOut: true, usePre
 	}
 
 	// Define date formats for current function call
-	const time = datetime.create().format('m-d-y H:M:S');
+	const time = datetime.create().format('H:M:S');
 	const today = datetime.create().format('m-d-y');
 
 	// Variable that includes time and logging prefix
