@@ -41,6 +41,17 @@ const strMsgNotLinked = 'Please link your SteamID with `!link <Steam Profile URL
 const bot = new Discord.Client();
 
 /**
+ * Command Collection
+ * @type {Collection<string, CommandModule>}
+ */
+bot.commands = new Discord.Collection();
+
+/**
+ * Linking Command Collection
+ * @type {Collection<string, CommandModule>}
+ */
+bot.commandsLink = new Discord.Collection();
+
  * he discord server the bot is a part of
  * @type {Guild}
  */
