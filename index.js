@@ -184,6 +184,7 @@ bot.on('message', message => {
 
 	const args = message.content.slice(conf.prefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
+	// const commandName = args.shift().toLowerCase();
 
 	// Begin fake bot typing
 	message.channel.startTyping();
@@ -201,21 +202,21 @@ bot.on('message', message => {
 			// Run commands
 			switch (cmd) {
 			case 'ping':
-				reply(strMsgPing);
+				bot.commands.get('ping').execute(message, args);
 				break;
 
 			case 'h':
 			case 'help':
-				reply((args.length > 0) ? help(args) : strMsgHelp);
+				bot.commands.get('help').execute(message, args);
 				break;
 
 			case 'a':
 			case 'about':
-				reply(strMsgAbout);
+				bot.commands.get('about').execute(message);
 				break;
 
 			case 'link':
-				reply(strMsgAlreadyLinked);
+				bot.commands.get('link').execute(message, args);
 				break;
 
 			case 'q':
@@ -230,11 +231,11 @@ bot.on('message', message => {
 				break;
 
 			case 'pi':
-				reply('3.14159265359...');
+				bot.commands.get('pi').execute(message);
 				break;
 
 			case 'admin':
-				reply('<@119966322523242497> will be able to help with whatever questions you may have.');
+				bot.commands.get('admin').execute(message);
 				break;
 
 			default:
@@ -246,17 +247,10 @@ bot.on('message', message => {
 			dlog(`User linked: ${message.author.id} - no`);
 			// Check for link attempt
 			if (cmd === 'link') {
-				opUser.linkAccount(message.author.username, message.author.id, args[0]).then(resp => {
-					reply(resp);
-				});
+				bot.commandsLink.get('link').execute(message, args);
 			}
 			else if (cmd === 'name') {
-				opUser.setUsername(message.author.id, args[0]).then(resp => {
-					if (resp.includes('#kiwipugs')) {
-						setPUGRole(message.author);
-					}
-					reply(resp);
-				});
+				bot.commandsLink.get('name').execute(message, args);
 			}
 			else {
 				reply(strMsgNotLinked);
@@ -264,7 +258,7 @@ bot.on('message', message => {
 		}
 	}).catch((err) => {
 		log(err);
-		reply(`${conf.server.adminMention} | Uh-oh error... we're looking into it.`);
+		reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further!`);
 	});
 
 	// End the fake typing
