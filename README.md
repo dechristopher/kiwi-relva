@@ -8,14 +8,14 @@
 - [x] Command Runner
 - [x] Help Command
 - [x] About Command
-- [ ] User Class
+- [X] User Class
 - [x] DB Connection (MySQL)
 - [x] Cache Connection (Redis)
 - [ ] DB Frontend API (register, stats, getInfo, etc)
-- [ ] Linking Steam IDs to Discord Users (just have them give profile URL)
+- [X] Linking Steam IDs to Discord Users (just have them give profile URL)
 - [x] User Profile Pictures from Discord Avatar
-- [ ] Queuing Architecture
-- [ ] Party Architecture
+- [X] Queuing Architecture
+- [X] Party Architecture
 - [ ] Queuing (Party and Solo) + Algorithm
 - [ ] Queue Command
 - [ ] Party Command
