@@ -95,6 +95,35 @@ else {
 	process.env.DEBUG = false;
 }
 
+/**
+ * Build command modules and add to commands collection
+ * @returns {Promise<string>} message with number of modules loaded
+ */
+const buildCommands = async () => {
+	const commandFiles = fs.readdirSync('./commands');
+	for (const file of commandFiles) {
+		// Exclude linking directory to avoid require errors
+		if(file !== 'linking') {
+			const command = require(`./commands/${file}`);
+			bot.commands.set(command.name, command);
+		}
+	}
+	return `Loaded ${bot.commands.size} regular commands`;
+};
+
+/**
+ * Build link command modules and add to commands collection
+ * @returns {Promise<string>} message with number of modules loaded
+ */
+const buildLinkCommands = async () => {
+	const commandFiles = fs.readdirSync('./commands/linking');
+	for (const file of commandFiles) {
+		const command = require(`./commands/linking/${file}`);
+		bot.commandsLink.set(command.name, command);
+	}
+	return `Loaded ${bot.commandsLink.size} linking commands`;
+};
+
 // Called when bot is connected
 bot.on('ready', function() {
 	log(`Login: ${bot.user.username} => (${bot.user.id})`);
