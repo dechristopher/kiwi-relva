@@ -129,6 +129,8 @@ bot.on('ready', function() {
 	log(`Login: ${bot.user.username} => (${bot.user.id})`);
 	// Instantiate the user module and service factories
 	opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
+	// Set the activity state of the bot
+	bot.user.setActivity('KIWI PUGs', { type: 'WATCHING' });
 	// Set the guild reference
 	guild = bot.guilds.first();
 	// Set the base party channel template
