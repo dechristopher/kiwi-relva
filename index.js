@@ -453,8 +453,14 @@ process.on('SIGINT', function() {
 	terminate();
 });
 
-// Authenticate using the bot token
-bot.login(conf.token);
-
 // Startup messages
-ascii().then(console.log).then(log(strBotUp));
+ascii().then(console.log).then(async () => {
+	// Load command modules
+	log(await buildCommands());
+	// Load link command modules
+	log(await buildLinkCommands());
+	// Init message
+	log(strBotUp);
+	// Discord auth
+	bot.login(conf.token);
+});
