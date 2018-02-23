@@ -176,6 +176,8 @@ bot.on('message', message => {
 		return;
 	}
 
+	dlog(`Got message: ${message.content} from ${message.author.username}`);
+
 	// let args = message.content.substring(1).split(' ');
 	// const cmd = args[0];
 	// args = args.splice(1);
