@@ -7,6 +7,34 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.6.1 ==
+~ Moved .eslintignore to proper location
+- Deleted ancient .jshintrc
+- Removed date from log output since log file is dated
+~ Improved help string selection module effectiveness
+~ Changed linkAccount.js responses to work with direct user responses
+~ Changed setUsername.js responses to work with direct user responses
++ Implemented about command handler module
++ Implemented admin command handler module
++ Implemented help command handler module
++ Implemented already linked command handler module
++ Implemented pi command handler module
++ Implemented ping command handler module
++ Implemented link command handler module
++ Implemented name command handler module
+- Removed unused module requirements in index.js
+- Removed command string responses that have been moved to command modules
++ Added bot command collections to index.js
++ Added command cooldowns collection to index.js
+- Removed or disabled all erroneous testing in bot.ready
++ Implemented command module loader functions in index.js
+~ Revamped initial logging functions
++ Call in command module loaders on service startup
++ Debug log message and sender
+~ Rolled over command handling to modules. Soon to be dynamic running
++ Export all queue, match, and user state functions for other modules
+! Implemented dynamic runner code with cooldown handler. Needs implement
+
 == 1.6.0 ==
 + Added ESLint to project and defined rules and ignoring
 ~ Refactored almost every file in the project to adhere to ESLint rules
