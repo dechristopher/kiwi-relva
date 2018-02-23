@@ -500,3 +500,17 @@ ascii().then(console.log).then(async () => {
 	// Discord auth
 	bot.login(conf.token);
 });
+
+// Export all queue and match state functions so command handlers can call them easily
+module.exports = {
+	opUser,
+	setPUGRole,
+	createMatchRoom,
+	createPartyChannel,
+	deleteChannel,
+	enqueue,
+	provisionClients,
+	provisionMatch,
+	party,
+	parseQueue,
+};
