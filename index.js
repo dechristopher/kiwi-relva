@@ -12,9 +12,7 @@ const os = require('os');
 const ascii = require('./modules/util/ascii.js');
 const log = require('./modules/util/log.js');
 const dlog = require('./modules/util/dlog.js');
-const help = require('./modules/help.js');
 const priv = require('./modules/util/checkPriv');
-// const perms = require('./modules/perms.js');
 const queue = new (require('./modules/queue.js'))();
 let opUser;
 
