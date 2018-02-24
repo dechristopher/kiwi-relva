@@ -1,9 +1,9 @@
 // kiwi/relva/modules/ops/setUsername.js - Created February 13th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
-const checkLinkedNoUsername = require('./checkLinkedNoUsername.js');
-const checkUsernameValid = require('./checkUsernameValid.js');
+const log = require('../util/log');
+const checkLinkedNoUsername = require('./checkLinkedNoUsername');
+const checkUsernameValid = require('./checkUsernameValid');
 
 /**
  * Username setter
