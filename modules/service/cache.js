@@ -5,7 +5,7 @@ const redis = require('redis');
 // https://github.com/NodeRedis/node_redis
 
 // Custom Modules
-const log = require('../util/log.js');
+const log = require('../util/log');
 
 class RedisConnection {
 	/**
