@@ -1,7 +1,7 @@
 // kiwi/relva/modules/types/Solo.js - Created February 17th, 2018
 
 // Custom Modules
-const QueueEntity = require('./QueueEntity.js');
+const QueueEntity = require('./QueueEntity');
 
 class Solo extends QueueEntity {
 
