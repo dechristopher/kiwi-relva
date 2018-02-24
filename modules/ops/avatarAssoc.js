@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/avatarAssoc.js - Created February 6th, 2018
 
 // Custom Modules
-const dlog = require('../util/log.js');
+const dlog = require('../util/log');
 
 /**
  * Avatar Association Algorithm: doc/avatar-association-algorithm.txt
