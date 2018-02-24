@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/checkValidSteamProfileURL.js - Created February 14th, 2018
 
 // Custom Modules
-const dlog = require('../util/dlog.js');
+const dlog = require('../util/dlog');
 
 /**
  * SteamProfile URL checker
