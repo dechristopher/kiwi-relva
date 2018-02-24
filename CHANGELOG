@@ -7,6 +7,14 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.6.2 ==
++ Add package-lock.json
++ Add badges to README
+~ Made pi more precise so it's not recognized as a phone number on mobile
++ Set the bot status to "Watching KIWI PUGs"
+~ Moved debug enabled message to init logging chain
+~ Removed '.js' in all require statements
+
 == 1.6.1 ==
 ~ Moved .eslintignore to proper location
 - Deleted ancient .jshintrc
