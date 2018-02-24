@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/checkLinked.js - Created February 6th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
+const log = require('../util/log');
 
 /**
  * Account link and username set checker
