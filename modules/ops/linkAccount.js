@@ -1,12 +1,12 @@
 // kiwi/relva/modules/ops/linkAccount.js - Created February 6th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
-const dlog = require('../util/dlog.js');
-const opGrabSteamID = require('./grabSteamID.js');
-const grabCSGOHours = require('./grabCSGOHours.js');
-const formatSteamURL = require('./formatSteamURL.js');
-const checkValidSteamProfileURL = require('./checkValidSteamProfileURL.js');
+const log = require('../util/log');
+const dlog = require('../util/dlog');
+const opGrabSteamID = require('./grabSteamID');
+const grabCSGOHours = require('./grabCSGOHours');
+const formatSteamURL = require('./formatSteamURL');
+const checkValidSteamProfileURL = require('./checkValidSteamProfileURL');
 
 /**
  * Account linker
