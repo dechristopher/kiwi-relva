@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/checkUsernameValid.js - Created February 15th, 2018
 
 // Custom Modules
-const dlog = require('../util/dlog.js');
+const dlog = require('../util/dlog');
 
 /**
  * Username validity checker
