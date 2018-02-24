@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/formatSteamURL.js - Created February 14th, 2018
 
 // Custom Modules
-const dlog = require('../util/log.js');
+const dlog = require('../util/log');
 
 /**
  * SteamProfile URL formatter
