@@ -87,9 +87,8 @@ let basePartyChannel;
 let baseMatchRoomChannel;
 
 // Debug mode enabled
-if (process.argv.indexOf('debug') > -1) {
+if (process.argv.includes('debug')) {
 	process.env.DEBUG = true;
-	dlog('DEBUGGING ENABLED');
 }
 else {
 	process.env.DEBUG = false;
@@ -483,7 +482,7 @@ function terminate() {
 
 // Catch the termination signal and operate on it
 process.on('SIGTERM', function() {
-	terminate();
+	// terminate();
 });
 
 // Catch the interrupt signal and operate on it
@@ -493,12 +492,14 @@ process.on('SIGINT', function() {
 
 // Startup messages
 ascii().then(console.log).then(async () => {
+	// Log debug mode
+	await dlog('DEBUGGING ENABLED');
 	// Load command modules
 	log(await buildCommands());
 	// Load link command modules
 	log(await buildLinkCommands());
 	// Init message
-	log(strBotUp);
+	await log(strBotUp);
 	// Discord auth
 	bot.login(conf.token);
 });
