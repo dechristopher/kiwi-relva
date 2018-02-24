@@ -9,16 +9,16 @@ const fs = require('fs');
 const os = require('os');
 
 // Custom modules
-const ascii = require('./modules/util/ascii.js');
-const log = require('./modules/util/log.js');
-const dlog = require('./modules/util/dlog.js');
+const ascii = require('./modules/util/ascii');
+const log = require('./modules/util/log');
+const dlog = require('./modules/util/dlog');
 const priv = require('./modules/util/checkPriv');
-const queue = new (require('./modules/queue.js'))();
+const queue = new (require('./modules/queue'))();
 let opUser;
 
 // Custom Types
-const Solo = require('./modules/types/Solo.js');
-const Party = require('./modules/types/Party.js');
+const Solo = require('./modules/types/Solo');
+const Party = require('./modules/types/Party');
 
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
