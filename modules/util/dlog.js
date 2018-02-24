@@ -1,7 +1,7 @@
 // kiwi/relva/modules/util/dlog.js - Created February 19th, 2018
 
 // NPM Modules
-const log = require('./log.js');
+const log = require('./log');
 const c = require('chalk');
 
 // Static variables
