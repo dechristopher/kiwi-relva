@@ -1,10 +1,10 @@
 // kiwi/relva/modules/types/Party.js - Created February 17th, 2018
 
 // Custom Modules
-const QueueEntity = require('./QueueEntity.js');
+const QueueEntity = require('./QueueEntity');
 
 // Custom Modules
-const genID = require('../util/genID.js');
+const genID = require('../util/genID');
 
 /**
  * A QueueEntity that handles parties of multiple players
