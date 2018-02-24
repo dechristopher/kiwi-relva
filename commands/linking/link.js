@@ -1,6 +1,6 @@
 // kiwi/relva/commands/linking/link.js - Created February 22nd, 2018
 
-const { opUser } = require('../../index.js');
+const { opUser } = require('../../index');
 
 module.exports = {
 	name: 'link',
