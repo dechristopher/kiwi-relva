@@ -5,7 +5,7 @@ const mysql = require('mysql');
 // https://github.com/mysqljs/mysql
 
 // Custom Modules
-const log = require('../util/log.js');
+const log = require('../util/log');
 
 class DatabaseConnection {
 	/**
