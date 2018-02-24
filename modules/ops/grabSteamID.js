@@ -6,8 +6,8 @@ const parser = require('xml2js').parseString;
 const steam = require('steamidconvert')();
 
 // Custom Modules
-const log = require('../util/log.js');
-const dlog = require('../util/dlog.js');
+const log = require('../util/log');
+const dlog = require('../util/dlog');
 
 /**
  * Steam URL to SteamIDs parser
