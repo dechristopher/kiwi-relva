@@ -1,18 +1,18 @@
 // kiwi/relva/modules/user.js - Created February 6th, 2018
 
 // Custom Modules
-const log = require('./util/log.js');
-const dlog = require('./util/dlog.js');
+const log = require('./util/log');
+const dlog = require('./util/dlog');
 
 // Operation Modules
-const opAvatarAssoc = require('./ops/avatarAssoc.js');
-const opCheckLinked = require('./ops/checkLinked.js');
-const opLinkAccount = require('./ops/linkAccount.js');
-const opSetUsername = require('./ops/setUsername.js');
+const opAvatarAssoc = require('./ops/avatarAssoc');
+const opCheckLinked = require('./ops/checkLinked');
+const opLinkAccount = require('./ops/linkAccount');
+const opSetUsername = require('./ops/setUsername');
 
 // Data Operation Modules
-const opGetUserSteamID = require('./ops/data/getUserSteamID.js');
-const opGetUserName = require('./ops/data/getUserName.js');
+const opGetUserSteamID = require('./ops/data/getUserSteamID');
+const opGetUserName = require('./ops/data/getUserName');
 
 class User {
 	/**
@@ -23,8 +23,8 @@ class User {
      */
 	constructor(bot, dbOptions, cacheOptions) {
 		this.bot = bot;
-		this.dbc = new (require('./service/dbc.js'))(dbOptions);
-		this.cache = new (require('./service/cache.js'))(cacheOptions);
+		this.dbc = new (require('./service/dbc'))(dbOptions);
+		this.cache = new (require('./service/cache'))(cacheOptions);
 		this.debug = process.env.DEBUG;
 	}
 
