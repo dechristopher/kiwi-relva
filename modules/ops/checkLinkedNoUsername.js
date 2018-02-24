@@ -1,7 +1,7 @@
 // kiwi/relva/modules/ops/checkLinkedNoUsername.js - Created February 15th, 2018
 
 // Custom Modules
-const log = require('../util/log.js');
+const log = require('../util/log');
 
 /**
  * Account link checker (no username set)
