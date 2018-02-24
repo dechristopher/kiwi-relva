@@ -1,6 +1,6 @@
 // kiwi/relva/commands/help.js - Created February 23nd, 2018
 
-const help = require('../modules/help.js');
+const help = require('../modules/help');
 
 module.exports = {
 	name: 'help',
