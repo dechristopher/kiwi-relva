@@ -4,7 +4,7 @@
 const got = require('got');
 
 // Custom Modules
-const dlog = require('../util/dlog.js');
+const dlog = require('../util/dlog');
 
 /**
  * CS:GO Hours Grabber
