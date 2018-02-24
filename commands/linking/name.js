@@ -1,6 +1,6 @@
 // kiwi/relva/commands/linking/name.js - Created February 22nd, 2018
 
-const { opUser, setPUGRole } = require('../../index.js');
+const { opUser, setPUGRole } = require('../../index');
 
 module.exports = {
 	name: 'name',
