@@ -182,8 +182,6 @@ bot.on('message', message => {
 	dlog(`Got message: ${message.content} from ${message.author.username}`);
 
 	const args = message.content.slice(conf.prefix.length).split(/ +/);
-	// Begin fake bot typing
-	message.channel.startTyping();
 	// const cmd = args.shift().toLowerCase();
 	const commandName = args.shift().toLowerCase();
 
