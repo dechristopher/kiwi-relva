@@ -165,17 +165,12 @@ bot.on('message', message => {
 		return;
 	}
 
-	// Wrapper for sending messages, just to be concise
-	const reply = (content) => {
-		message.channel.send(content);
-	};
-
 	// Filter out messages that don't start with the prefix or are from the bot itself
 	if (!message.content.startsWith(conf.prefix) || message.author.bot) return;
 
 	// Only reply to messages in #kiwipugs and #kiwiverify
 	if (message.channel.id != conf.server.pugChannel && message.channel.id != conf.server.verifyChannel) {
-		reply(strMsgNoDM);
+		message.reply(strMsgNoDM);
 		return;
 	}
 
@@ -206,11 +201,11 @@ bot.on('message', message => {
 		// If command not found
 		if (!command) {
 			if(isLinked) {
-				reply(`\`!${commandName}\` isn't a valid command. Use !help to learn more.`);
+				message.reply(`\`!${commandName}\` isn't a valid command. Use !help to learn more.`);
 				return;
 			}
 			else {
-				reply(strMsgNotLinked);
+				message.reply(strMsgNotLinked);
 				return;
 			}
 		}
@@ -252,7 +247,7 @@ bot.on('message', message => {
 
 		// Execute command
 		try {
-			command.execute(message, args);
+			command.execute(message, args, privLevel);
 		}
 		catch (error) {
 			log(error);
@@ -261,7 +256,7 @@ bot.on('message', message => {
 		// [/TESTING]
 	}).catch((err) => {
 		log(err);
-		reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further! [CODE: K18]`);
+		message.reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further! [CODE: K18]`);
 	});
 
 	// End the fake typing
@@ -444,7 +439,7 @@ function terminate() {
 
 // Catch the termination signal and operate on it
 process.on('SIGTERM', function() {
-	// terminate();
+	terminate();
 });
 
 // Catch the interrupt signal and operate on it
@@ -455,7 +450,7 @@ process.on('SIGINT', function() {
 // Startup messages
 ascii().then(console.log).then(async () => {
 	// Log debug mode
-	await dlog('DEBUGGING ENABLED');
+	if(process.env.DEBUG) await dlog('DEBUGGING ENABLED');
 	// Load command modules
 	log(await buildCommands());
 	// Load link command modules
@@ -478,4 +473,5 @@ module.exports = {
 	provisionMatch,
 	party,
 	parseQueue,
+	terminate,
 };
