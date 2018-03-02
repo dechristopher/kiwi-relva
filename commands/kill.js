@@ -4,7 +4,6 @@ const { terminate } = require('../index');
 
 module.exports = {
 	name: 'kill',
-	aliases: ['k'],
 	description: 'Terminates the bot immediately.',
 	messages: {
 		replyKill: 'I\'m shutting down now. Bye...',
