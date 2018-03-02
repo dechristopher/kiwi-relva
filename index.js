@@ -181,14 +181,7 @@ bot.on('message', message => {
 
 	dlog(`Got message: ${message.content} from ${message.author.username}`);
 
-	// let args = message.content.substring(1).split(' ');
-	// const cmd = args[0];
-	// args = args.splice(1);
-
 	const args = message.content.slice(conf.prefix.length).split(/ +/);
-	const cmd = args.shift().toLowerCase();
-	// const commandName = args.shift().toLowerCase();
-
 	// Begin fake bot typing
 	message.channel.startTyping();
 
@@ -196,27 +189,53 @@ bot.on('message', message => {
 	const privLevel = priv(message.author.id);
 	dlog(`PrivLevel: ${privLevel}`);
 
+	// Check if user linked
 	opUser.checkLinked(message.author.id).then((isLinked) => {
-		// TESTING
-		/* if (!bot.commands.has(commandName)) return;
+		// [TESTING]
+		// Command lookup
+		let command;
+		if (isLinked) {
+			dlog(`User linked: ${message.author.id} - yes`);
+			command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		}
+		else {
+			dlog(`User linked: ${message.author.id} - no`);
+			command = bot.commandsLink.get(commandName) || bot.commandsLink.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		}
 
-		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		// If command not found
+		if (!command) {
+			if(isLinked) {
+				reply(`\`!${commandName}\` isn't a valid command. Use !help to learn more.`);
+				return;
+			}
+			else {
+				reply(strMsgNotLinked);
+				return;
+			}
+		}
 
-		if (!command) return;
+		// Begin fake bot typing
+		message.channel.startTyping();
 
+		// Check for command cooldown entry
 		if (!cooldowns.has(command.name)) {
 			cooldowns.set(command.name, new Discord.Collection());
 		}
 
+		// Calculate cooldown times
 		const now = Date.now();
 		const timestamps = cooldowns.get(command.name);
 		const cooldownAmount = (command.cooldown || 3) * 1000;
 
+		// Cooldown expiry
 		if (!timestamps.has(message.author.id)) {
+			// Create cooldown
 			timestamps.set(message.author.id, now);
-    		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 		}
 		else {
+			// Expire cooldowns
 			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 			if (now < expirationTime) {
@@ -228,6 +247,10 @@ bot.on('message', message => {
 			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 		}
 
+		// Run avatar association
+		if (isLinked) opUser.avatarAssoc(message.author.id, message.author.avatarURL);
+
+		// Execute command
 		try {
 			command.execute(message, args);
 		}
@@ -298,10 +321,12 @@ bot.on('message', message => {
 			else {
 				reply(strMsgNotLinked);
 			}
+			message.reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further! [CODE: K17]`);
 		}
+		// [/TESTING]
 	}).catch((err) => {
 		log(err);
-		reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further!`);
+		reply(`our fault, we hit an error somewhere... ${conf.server.adminMention} will look into it further! [CODE: K18]`);
 	});
 
 	// End the fake typing
