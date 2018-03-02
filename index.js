@@ -155,8 +155,10 @@ bot.on('error', console.error);
 // bot.on('disconnect', log('DISCONNECTED'));
 // bot.on('reconnecting', log('RECONNECTING'));
 
-// Called when bot receives messages
-// message => https://discord.js.org/#/docs/main/stable/class/Message
+/**
+ * Called when bot receives messages
+ * @param {Message} message => https://discord.js.org/#/docs/main/stable/class/Message
+ */
 bot.on('message', message => {
 	// Make sure the bot doesn't reply to its own messages
 	if (message.author.id == bot.user.id) {
