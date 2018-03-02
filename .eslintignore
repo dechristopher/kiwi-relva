@@ -1,6 +1,9 @@
 # NPM Modules
 node_modules/
 
+# Deprecated Modules
+modules/deprecated
+
 # Log folder
 logs/
 
