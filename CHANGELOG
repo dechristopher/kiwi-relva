@@ -7,6 +7,15 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.6.3 ==
+~ Rolled over to dynamic command processing
++ Added privLevel to command execution parameters
++ Added deprecated modules folder to .eslintignore
+~ Begin fake bot typing after commad lookup
++ Random documentation
+~ Rolled over all replies to message.reply in stead of message.channel.sender
++ Implemented kill command to terminate bot
+
 == 1.6.2 ==
 + Add package-lock.json
 + Add badges to README
