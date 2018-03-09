@@ -86,14 +86,6 @@ let basePartyChannel;
  */
 let baseMatchRoomChannel;
 
-// Debug mode enabled
-if (process.argv.includes('debug')) {
-	process.env.DEBUG = true;
-}
-else {
-	process.env.DEBUG = false;
-}
-
 /**
  * Build command modules and add to commands collection
  * @returns {Promise<string>} message with number of modules loaded

@@ -4,7 +4,8 @@
     "description": "The KIWI Bot back in full force made for Discord.",
     "main": "index.js",
     "scripts": {
-        "start": "node .",
+		"start": "DEBUG=false node .",
+		"debug": "DEBUG=true node .",
         "test": "mocha",
         "lint": "eslint ."
     },
