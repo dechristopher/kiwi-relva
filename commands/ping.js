@@ -6,7 +6,7 @@ module.exports = {
 	messages: {
 		replyPing: 'Pong!',
 	},
-	execute(message, args) {
-		message.channel.send(`${this.messages.replyPing} [${args}]`);
+	execute(message) {
+		message.channel.send(`${this.messages.replyPing}`);
 	},
 };
