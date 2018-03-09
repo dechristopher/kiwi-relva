@@ -2,7 +2,7 @@
 
 # relva
 
-## TODO
+### TODO
 
 - [x] Bot Connection
 - [x] Command Runner
@@ -20,8 +20,10 @@
 - [ ] Queue Command
 - [ ] Party Command
 - [ ] Admin Commands
+- [ ] Integration with other KIWI services
+- [ ] Tying it all together
 
-## Project Structure
+### Project Structure
 
 - doc/ (contains documentation and related project info)
 - logs/ (generated for log output on first run)
