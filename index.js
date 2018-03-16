@@ -238,8 +238,11 @@ bot.on('message', message => {
 			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 		}
 
-		// Run avatar association
-		if (isLinked) opUser.avatarAssoc(message.author.id, message.author.avatarURL);
+		// Run avatar and username association
+		if (isLinked) {
+			opUser.avatarAssoc(message.author.id, message.author.avatarURL);
+			opUser.usernameAssoc(message.author, guild);
+		}
 
 		// Execute command
 		try {
