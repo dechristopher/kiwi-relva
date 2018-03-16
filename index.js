@@ -458,15 +458,16 @@ ascii().then(console.log).then(async () => {
 
 // Export all queue and match state functions so command handlers can call them easily
 module.exports = {
-	opUser,
-	setPUGRole,
-	createMatchRoom,
-	createPartyChannel,
-	deleteChannel,
-	enqueue,
-	provisionClients,
-	provisionMatch,
-	party,
-	parseQueue,
-	terminate,
+	guild: guild,
+	opUser: opUser,
+	setPUGRole: setPUGRole,
+	createMatchRoom: createMatchRoom,
+	createPartyChannel: createPartyChannel,
+	deleteChannel: deleteChannel,
+	enqueue: enqueue,
+	provisionClients: provisionClients,
+	provisionMatch: provisionMatch,
+	party: party,
+	parseQueue: parseQueue,
+	terminate: terminate,
 };
