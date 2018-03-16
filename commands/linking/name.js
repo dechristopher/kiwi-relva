@@ -12,6 +12,7 @@ module.exports = {
 				setPUGRole(message.author);
 			}
 			message.reply(resp);
+			message.channel.stopTyping();
 		});
 	},
 };
