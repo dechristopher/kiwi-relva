@@ -481,17 +481,13 @@ ascii().then(console.log).then(async () => {
 });
 
 // Export all queue and match state functions so command handlers can call them easily
-module.exports = {
-	guild: guild,
-	opUser: opUser,
-	setPUGRole: setPUGRole,
-	createMatchRoom: createMatchRoom,
-	createPartyChannel: createPartyChannel,
-	deleteChannel: deleteChannel,
-	enqueue: enqueue,
-	provisionClients: provisionClients,
-	provisionMatch: provisionMatch,
-	party: party,
-	parseQueue: parseQueue,
-	terminate: terminate,
-};
+exports.setPUGRole = setPUGRole;
+exports.createMatchRoom = createMatchRoom;
+exports.createPartyChannel = createPartyChannel;
+exports.deleteChannel = deleteChannel;
+exports.enqueue = enqueue;
+exports.provisionClients = provisionClients;
+exports.provisionMatch = provisionMatch;
+exports.party = party;
+exports.parseQueue = parseQueue;
+exports.terminate = terminate;
