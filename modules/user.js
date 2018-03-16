@@ -6,6 +6,7 @@ const dlog = require('./util/dlog');
 
 // Operation Modules
 const opAvatarAssoc = require('./ops/avatarAssoc');
+const opUsernameAssoc = require('./ops/usernameAssoc');
 const opCheckLinked = require('./ops/checkLinked');
 const opLinkAccount = require('./ops/linkAccount');
 const opSetUsername = require('./ops/setUsername');
@@ -72,6 +73,11 @@ class User {
 	avatarAssoc(userID, avatarURL) {
 		dlog('hit opAvatarAssoc()');
 		opAvatarAssoc(userID, avatarURL, this.dbc.conn(), this.cache.conn());
+	}
+
+	usernameAssoc(user, guild) {
+		dlog('hit opUsernameAssoc()');
+		opUsernameAssoc(user, guild, this.dbc.conn());
 	}
 
 	getUserSteamID(userID) {
