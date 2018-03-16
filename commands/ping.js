@@ -8,5 +8,6 @@ module.exports = {
 	},
 	execute(message) {
 		message.channel.send(`${this.messages.replyPing}`);
+		message.channel.stopTyping();
 	},
 };
