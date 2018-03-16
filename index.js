@@ -143,6 +143,8 @@ bot.on('ready', function() {
 	bot.user.setActivity('KIWI PUGs', { type: 'WATCHING' });
 	// Set the guild reference
 	guild = bot.guilds.first();
+	// Export guild object
+	exports.guild = guild;
 	// Instantiate the user module and service factories
 	buildUserModule().then(() => {
 		// Load command modules
