@@ -25,6 +25,7 @@
         "chalk": "^2.3.0",
         "discord.js": "github:discordjs/discord.js#11.3-dev",
         "erlpack": "github:hammerandchisel/erlpack",
+        "git-last-commit": "^0.3.0",
         "got": "^8.1.0",
         "mysql": "^2.15.0",
         "node-datetime": "^2.0.4",
