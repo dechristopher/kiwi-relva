@@ -9,6 +9,7 @@ module.exports = {
 	execute(message, args) {
 		opUser.linkAccount(message.author.username, message.author.id, args[0]).then(resp => {
 			message.reply(resp);
+			message.channel.stopTyping();
 		});
 	},
 };
