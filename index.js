@@ -118,12 +118,16 @@ const buildLinkCommands = async () => {
 // Called when bot is connected
 bot.on('ready', function() {
 	log(`Login: ${bot.user.username} => (${bot.user.id})`);
-	// Instantiate the user module and service factories
-	opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
 	// Set the activity state of the bot
 	bot.user.setActivity('KIWI PUGs', { type: 'WATCHING' });
 	// Set the guild reference
 	guild = bot.guilds.first();
+	// Instantiate the user module and service factories
+	opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
+	// Load command modules
+	buildCommands().then(log);
+	// Load link command modules
+	buildLinkCommands().then(log);
 	// Set the base party channel template
 	basePartyChannel = guild.channels.get(conf.server.partyBaseID);
 	// Set the base matchRoom channel template
@@ -443,10 +447,6 @@ process.on('SIGINT', function() {
 ascii().then(console.log).then(async () => {
 	// Log debug mode
 	if(process.env.DEBUG) await dlog('DEBUGGING ENABLED');
-	// Load command modules
-	log(await buildCommands());
-	// Load link command modules
-	log(await buildLinkCommands());
 	// Init message
 	await log(strBotUp);
 	// Discord auth
