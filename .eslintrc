@@ -3,9 +3,13 @@
     "env": {
         "node": true,
         "es6": true
-    },
+	},
+	"ecmaFeatures": {
+        "modules": true
+	},
     "parserOptions": {
-        "ecmaVersion": 2017
+		"ecmaVersion": 2017,
+		"sourceType": "module"
     },
     "rules": {
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
