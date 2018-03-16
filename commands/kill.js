@@ -12,10 +12,12 @@ module.exports = {
 	execute(message, args, privLevel) {
 		if(privLevel === 2) {
 			message.reply(this.messages.replyKill);
+			message.channel.stopTyping();
 			terminate();
 		}
 		else {
 			message.reply(this.messages.replyFakeNotCommand);
+			message.channel.stopTyping();
 		}
 	},
 };
