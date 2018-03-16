@@ -1,7 +1,7 @@
 // kiwi/relva/modules/help.js - Created February 5th, 2018
 
 // Command help descriptions
-const strHelpPing = '`!ping` basic response command to test bot functionality and response time.';
+const strHelpAdmin = '`!admin` calls and mentions an admin in the channel.';
 const strHelpHelp = '`!help` gives more information about certain commands and their usage.';
 const strHelpAbout = '`!about` gives some basic information about the KIWI PUG system and KIWIBot.';
 const strHelpQueue = '`!queue` allows a user or party to join the PUG or scrim matchmaking queue';
@@ -11,8 +11,8 @@ module.exports = function(args) {
 	// Returns help strings for questioned commands
 	let reply;
 	switch (args[0].toLowerCase()) {
-	case 'ping':
-		reply = strHelpPing;
+	case 'admin':
+		reply = strHelpHelp;
 		break;
 
 	case 'h':
