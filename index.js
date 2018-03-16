@@ -3,6 +3,7 @@
 // NPM modules
 const Discord = require('discord.js');
 const Collection = require('discord.js').Collection;
+const git = require('git-last-commit');
 
 // Core Node Modules
 const fs = require('fs');
@@ -23,9 +24,10 @@ const Party = require('./modules/types/Party');
 // Build configuration
 const conf = JSON.parse(fs.readFileSync('./config.json'));
 const version = require('./package').version;
+let build;
 
 // Static strings
-const strBotUp = `Init KIWIBot [relva build v${version}]`;
+let strBotUp;
 const strForceShutdown = 'Could not close connections in time, forcefully shutting down!';
 const strInitShutdown = 'Init service shutdown';
 const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
@@ -33,6 +35,16 @@ const strLogSeparator = `${os.EOL}~~~${os.EOL}`;
 // Message reply strings
 const strMsgNoDM = 'I don\'t reply to DMs, please send me commands through the #kiwipugs channel in the KIWI Discord server.';
 const strMsgNotLinked = 'Please link your SteamID with `!link <Steam Profile URL>` and set your name with `!name <username>` before continuing to use the service.';
+
+// Get latest build number
+git.getLastCommit((err, commit) => {
+	if (err) {
+		build = 'NOGIT';
+		return;
+	}
+	build = commit.shortHash;
+	strBotUp = `Init KIWIBot [relva v${version} | build ${build}]`;
+});
 
 /**
  * Discord.Client => https://discord.js.org/#/docs/main/stable/class/Client
