@@ -127,6 +127,15 @@ const buildLinkCommands = async () => {
 	return `Loaded ${bot.commandsLink.size} linking commands`;
 };
 
+const buildUserModule = function() {
+	return new Promise(function(resolve) {
+		opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
+		// Export opUser module
+		exports.opUser = opUser;
+		resolve();
+	});
+};
+
 // Called when bot is connected
 bot.on('ready', function() {
 	log(`Login: ${bot.user.username} => (${bot.user.id})`);
@@ -135,11 +144,12 @@ bot.on('ready', function() {
 	// Set the guild reference
 	guild = bot.guilds.first();
 	// Instantiate the user module and service factories
-	opUser = new (require('./modules/user.js'))(bot, conf.db, conf.cache);
-	// Load command modules
-	buildCommands().then(log);
-	// Load link command modules
-	buildLinkCommands().then(log);
+	buildUserModule().then(() => {
+		// Load command modules
+		buildCommands().then(log);
+		// Load link command modules
+		buildLinkCommands().then(log);
+	});
 	// Set the base party channel template
 	basePartyChannel = guild.channels.get(conf.server.partyBaseID);
 	// Set the base matchRoom channel template
