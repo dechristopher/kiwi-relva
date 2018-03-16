@@ -7,6 +7,37 @@
 
 === R E L V A   C H A N G E L O G ===
 
+== 1.6.4 ==
+~ Fixed debug mode not toggling properly
++ Implemented base party command module
++ Implemented base queue command module
+~ Updated README.md TODO
+- Removed args output from ping command
++ Added help command before user links account
++ Began working on queue subcommands
++ Added fake typing stoppers within command modules
+- Removed 'ping' command from help menu
++ Added 'admin' command to help menu
+~ Changed 'about' command response appropriateness
+~ Fixed avatarAssoc dlog importing regular logger
+~ Updated party and queue docs
++ Enabled ecma modules in eslintrc
++ Implemented party module base structure
++ Implemented queue module base structure
++ Implemented discord nickname forcing module usernameAssoc.js
++ Implemented usernameAssoc within user.js
++ Created queue subcommand modules
++ Created party subcommand modules
+~ Build command modules after bot login
++ Perform nickname forcing on linked users
+~ Fixed exports in index.js (still kinda borked)
++ Implemented trivial 'pong' command
++ NPM Require 'git-last-commit'
++ Include last git commit shortHash in init message
+~ Build commands after user operation module loads
+~ Export guild object after bot login
+~ Changed exports in index.js to es6 exports
+
 == 1.6.3 ==
 ~ Rolled over to dynamic command processing
 + Added privLevel to command execution parameters
