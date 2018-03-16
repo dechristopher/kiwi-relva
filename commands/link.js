@@ -8,5 +8,6 @@ module.exports = {
 	},
 	execute(message) {
 		message.reply(`${this.messages.replyAlreadyLinked}`);
+		message.channel.stopTyping();
 	},
 };
