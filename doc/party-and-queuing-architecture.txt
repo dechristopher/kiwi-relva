@@ -39,7 +39,7 @@ value being the discord.js Channel object
 Party Access / Mutation:
     Party Leader:
         - can disband party
-        - can remove players from party
+        - can remove (kick) players from party
         - can promote another player to party leader
         - can generate new join codes
         - can queue up the party
