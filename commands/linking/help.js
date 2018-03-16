@@ -9,5 +9,6 @@ module.exports = {
 	},
 	execute(message) {
 		message.reply(this.messages.replyHelp);
+		message.channel.stopTyping();
 	},
 };
