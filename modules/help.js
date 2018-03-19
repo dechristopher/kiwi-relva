@@ -7,7 +7,8 @@ const strHelpAbout = '`!about` gives some basic information about the KIWI PUG s
 const strHelpQueue = '`!queue` allows a user or party to join the PUG or scrim matchmaking queue';
 const strHelpParty = '`!party` allows users to create parties to queue into matches together.';
 
-module.exports = function(args) {
+module.exports = function(args, privLevel) {
+	// Add privileged commands :>
 	// Returns help strings for questioned commands
 	let reply;
 	switch (args[0].toLowerCase()) {

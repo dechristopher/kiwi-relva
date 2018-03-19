@@ -9,8 +9,8 @@ module.exports = {
 	messages: {
 		replyHelp: 'available commands are: `!queue`, `!party`, `!about`, `!admin`, `!name` and `!help` - for command details type `!help <command>`',
 	},
-	execute(message, args) {
-		message.reply((args.length > 0) ? help(args) : this.messages.replyHelp);
+	execute(message, args, privLevel) {
+		message.reply((args.length > 0) ? help(args, privLevel) : this.messages.replyHelp);
 		message.channel.stopTyping();
 	},
 };
