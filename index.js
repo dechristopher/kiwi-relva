@@ -112,7 +112,8 @@ const buildCommands = async () => {
 	const commandFiles = fs.readdirSync('./commands');
 	for (const file of commandFiles) {
 		// Exclude linking directory to avoid require errors
-		if(file !== 'linking') {
+		if(file !== 'linking' && file !== 'modules-party' && file !== 'modules-queue') {
+			// console.log(file);
 			const command = require(`./commands/${file}`);
 			bot.commands.set(command.name, command);
 		}
@@ -127,6 +128,7 @@ const buildCommands = async () => {
 const buildLinkCommands = async () => {
 	const commandFiles = fs.readdirSync('./commands/linking');
 	for (const file of commandFiles) {
+		// console.log(file);
 		const command = require(`./commands/linking/${file}`);
 		bot.commandsLink.set(command.name, command);
 	}
