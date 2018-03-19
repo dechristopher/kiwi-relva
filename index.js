@@ -307,6 +307,7 @@ function setPUGRole(user) {
 		dlog(`Set PUG User -> ${user.username} (${user.id})`);
 		guild.fetchMember(user).then(member => {
 			member.addRole(conf.server.pugRole);
+			pugChannel.send(`Welcome <@${user.id}> to the KIWI PUG system! Type \`!help\` to learn how to use me :>`);
 		});
 	}, 5000);
 }
