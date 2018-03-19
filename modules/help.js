@@ -2,6 +2,7 @@
 
 // Command help descriptions
 const strHelpAdmin = '`!admin` calls and mentions an admin in the channel.';
+const strHelpName = '`!name` allows you to change your KIWI username once a month.';
 const strHelpHelp = '`!help` gives more information about certain commands and their usage.';
 const strHelpAbout = '`!about` gives some basic information about the KIWI PUG system and KIWIBot.';
 const strHelpQueue = '`!queue` allows a user or party to join the PUG or scrim matchmaking queue';
@@ -14,6 +15,10 @@ module.exports = function(args, privLevel) {
 	switch (args[0].toLowerCase()) {
 	case 'admin':
 		reply = strHelpAdmin;
+		break;
+
+	case 'name':
+		reply = strHelpName;
 		break;
 
 	case 'h':
