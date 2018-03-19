@@ -11,7 +11,7 @@ module.exports = {
 		replySuccess: 'you\'ll now be known as such.',
 		replyDumbass: 'that\'s already your username...',
 	},
-	execute(message, args) {
+	execute(message, args, privLevel) {
 		if(!args.length) {
 			this.die(message, this.messages.replyInvalidArgs);
 			return;
@@ -25,9 +25,11 @@ module.exports = {
 		// WARNING: Hacky re-use of old code :<
 		opUser.setUsername(message.author.id, args[0]).then(resp => {
 			if (resp.includes('#kiwipugs')) {
-				// Set username immediately...?
-				// NEEDS TO BE MODIFIED TO NOT TRY FOR ADMINS
-				opUser.usernameAssoc(message.author, guild);
+				// Ensure weirdo Administrator perm breaking doesn't happen when renaming
+				if(privLevel != 3) {
+					// Set username immediately
+					opUser.usernameAssoc(message.author, guild);
+				}
 				// Success
 				this.die(message, this.messages.replySuccess);
 				return;

@@ -265,7 +265,10 @@ bot.on('message', message => {
 		// Run avatar and username association
 		if (isLinked) {
 			opUser.avatarAssoc(message.author.id, message.author.avatarURL);
-			opUser.usernameAssoc(message.author, guild);
+			// Ensure weirdo Administrator perm breaking doesn't happen when renaming
+			if (privLevel != 3) {
+				opUser.usernameAssoc(message.author, guild);
+			}
 		}
 
 		// Execute command
