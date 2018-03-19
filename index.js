@@ -71,7 +71,7 @@ bot.commandsLink = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 /**
- * he discord server the bot is a part of
+ * The discord server the bot is a part of
  * @type {Guild}
  */
 let guild;
