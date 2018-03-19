@@ -17,7 +17,7 @@ module.exports = function(user, guild, dbconn) {
 		else {
 			guild.fetchMember(user).then(member => {
 				dlog(`[uAssoc] Checking ${member.nickname} = ${results[0].username}`);
-				if (member.nickname !== results[0].username) {
+				if (member.nickname !== results[0].username || member.user.username !== results[0].username) {
 					dlog(`[uAssoc] Changing ${member.nickname} -> ${results[0].username}`);
 					member.setNickname(results[0].username);
 				}
