@@ -10,6 +10,10 @@ const dlog = require('../util/dlog');
  */
 module.exports = function(username) {
 	return new Promise(function(resolve) {
+		if(username === 'null' || username === 'undefined') {
+			resolve(false);
+			return;
+		}
 		// Ensure user has provided a valid username:
 		//  - alpha-numerics, underscores, and dashes only
 		//  - more than two characters

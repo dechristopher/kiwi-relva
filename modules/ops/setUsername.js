@@ -30,7 +30,7 @@ module.exports = function(userID, username, dbconn) {
 			else {
 				checkUsernameValid(username).then(valid => {
 					if (!valid) {
-						resolve('your desired username must only contain `letters`, `numbers`, `dashes`, and `underscores` and must be `two or more characters long`.');
+						resolve('your desired username must only contain `letters`, `numbers`, `dashes`, and `underscores`, be `appropriate`, and must be `two or more characters long`.');
 					}
 					else {
 						dbconn.query('SELECT steam_id FROM `users` WHERE `username` = ?', [username], function(checkError, checkResults) {
