@@ -75,7 +75,7 @@ module.exports = function(username, userID, steamProfURL, dbconn) {
 								return;
 							}
 							else {
-								dbconn.query('INSERT INTO `users` (discord_id, steam_id, steam_id_64, steam_id_3, steam_profile_url) VALUES (?, ?, ?, ?, ?)', [userID, nugget.ids.steamid, nugget.ids.steamid64, nugget.ids.steamid3, steamURL], function(insertError) {
+								dbconn.query('INSERT INTO `users` (discord_id, steam_id, steam_id_64, steam_id_3, steam_profile_url) VALUES (?, ?, ?, ?, ?)', [userID, nugget.ids.steamid, nugget.ids.steamid64, nugget.ids.steamid3, `https://steamcommunity.com/profiles/${nugget.ids.steamid64}`], function(insertError) {
 									if (insertError) {
 										log(insertError);
 										resolve('sorry but something weird happened on our end. Contact `<@119966322523242497>` immediately and try again shortly. `[CODE: K82]`');
