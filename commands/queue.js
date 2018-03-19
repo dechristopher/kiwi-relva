@@ -10,11 +10,19 @@ module.exports = {
 	},
 	subcommands: ['j', 'join', 'l', 'leave', 'i', 'info'],
 	execute(message, args, privLevel) {
+		console.log('hit queue');
+		if(!args.length) {
+			message.reply(this.messages.replyQueueNotAvailable);
+			message.channel.stopTyping();
+			return;
+		}
+
+		// Get subcommand
 		const sub = this.subcommands.find(args[0]);
 
 		// Error out if subcommand not valid
 		if(!sub) {
-			message.reply(`${this.messages.replyInvalidArgument}`);
+			message.reply(this.messages.replyInvalidArgument);
 			message.channel.stopTyping();
 			return;
 		}
@@ -30,7 +38,7 @@ module.exports = {
 			return this.info(privLevel);
 		}
 
-		// message.reply(`${this.messages.replyQueueNotAvailable}`);
+		// message.reply(this.messages.replyQueueNotAvailable);
 	},
 	join() {
 		return;
@@ -38,13 +46,14 @@ module.exports = {
 	leave() {
 		return;
 	},
-	info() {
+	info(privLevel) {
 		/*
 			Regular user: @you, there are currently X players looking for a match in your region.
 					 VIP: @you, there are currently X players looking for a match in your region.
 				   Admin: @you, there are currently X players in X prties looking for a match.
 					  - : DM -> rich text showing all players and parties
 		*/
+		console.log(privLevel);
 		return;
 	},
 };
