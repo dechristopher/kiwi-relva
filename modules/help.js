@@ -13,7 +13,7 @@ module.exports = function(args, privLevel) {
 	let reply;
 	switch (args[0].toLowerCase()) {
 	case 'admin':
-		reply = strHelpHelp;
+		reply = strHelpAdmin;
 		break;
 
 	case 'h':
