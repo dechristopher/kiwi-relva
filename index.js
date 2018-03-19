@@ -77,6 +77,12 @@ const cooldowns = new Discord.Collection();
 let guild;
 
 /**
+ * The #kiwipugs channel
+ * @type {GuildChannel}
+ */
+let pugChannel;
+
+/**
  * Party Channel Collection
  * @type {Collection<string, GuildChannel>}
  */
@@ -152,6 +158,7 @@ bot.on('ready', function() {
 		// Load link command modules
 		buildLinkCommands().then(log);
 	});
+	pugChannel = guild.channels.get(conf.server.pugChannel);
 	// Set the base party channel template
 	basePartyChannel = guild.channels.get(conf.server.partyBaseID);
 	// Set the base matchRoom channel template
