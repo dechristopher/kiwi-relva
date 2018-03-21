@@ -369,8 +369,8 @@ function createMatchRoom(id) {
 			matchRoomChannels.set(id, channel);
 			dlog(`Created matchroom: ${channel.name}`);
 			resolve(channel);
-		}).catch(() => {
-			reject(`FAIL [createMatchRoom: party-${id}]`);
+		}).catch((err) => {
+			reject(`FAIL [createMatchRoom: party-${id}] : ${err}`);
 		});
 	});
 }
@@ -388,8 +388,8 @@ function createPartyChannel(id) {
 			partyChannels.set(id, channel);
 			dlog(`Created party channel: ${channel.name}`);
 			resolve(channel);
-		}).catch(() => {
-			reject(`FAIL [createPartyChannel: party-${id}]`);
+		}).catch((err) => {
+			reject(`FAIL [createPartyChannel: party-${id}] : ${err}`);
 		});
 	});
 }
@@ -418,8 +418,8 @@ function deleteChannel(channel, type = 'party') {
 				reject(`FAIL [deleteChannel: invalid channel type -> ${type}`);
 			}
 			resolve(delChannel);
-		}).catch(() => {
-			reject(`FAIL [deleteChannel: ${channel.name}`);
+		}).catch((err) => {
+			reject(`FAIL [deleteChannel: ${channel.name}] : ${err}`);
 		});
 	});
 }
