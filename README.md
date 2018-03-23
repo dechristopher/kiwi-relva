@@ -25,6 +25,7 @@
 
 ### Project Structure
 
+- commands/ (comtains command modules)
 - doc/ (contains documentation and related project info)
 - logs/ (generated for log output on first run)
 - modules/ (contains all project sub-modules)
