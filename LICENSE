@@ -1,20 +1,21 @@
-=== THE KIWI LICENSE ===
+MIT License
 
-The KIWI License grants you the express rights to use this software so long as
-you are directly given permission, are part of the KIWI organization, or are
-a direct partner that has been given access to the software.
+Copyright (c) 2016-2020 Andrew DeChristopher
 
-The KIWI License does not allow modification, addition, or deletion of any part
-of this software or its source code and resources. Redistribution of this 
-software is also expressly prohibited.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The KIWI License additionally does not allow any other forms of source code
-re-use in any project except explicitly projects foundried within the KIWI
-organization.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The cloning or downloading of this repo, or general ownership of this LICENSE 
-file, assumes the party agrees with the above clauses.
-
-REPO: kiwi/relva - 2018
-- Andrew DeChristopher
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
